@@ -28,6 +28,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         inicializarCasillas();
+        setOnclickListener();
         setDefaultColor();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
