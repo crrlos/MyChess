@@ -197,6 +197,16 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         }
     }
 
+    private void setOnclickListener(){
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                casillas[i][j].setOnClickListener(this);
+
+            }
+
+        }
+    }
+
     @Override
     public void onClick(View v) {
 
