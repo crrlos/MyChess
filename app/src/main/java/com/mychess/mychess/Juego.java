@@ -227,14 +227,14 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         }
         return position;//si el click no fue en una casilla se devuelven valores negativos en la posicion
     }
-    private boolean establecerCoordenadas(String coordenada){
+    private boolean moverPieza(String coordenadas){
         final String columnas = "abcdefgh";
         final String filas = "12345678";
        try{
-            int cOrigen = columnas.indexOf(coordenada.charAt(0));
-           int cDestino = columnas.indexOf(coordenada.charAt(2));
-           int fOrigen = filas.indexOf(coordenada.charAt(1));
-           int fDestino = filas.indexOf(coordenada.charAt(3));
+           int cOrigen = columnas.indexOf(coordenadas.charAt(0));
+           int cDestino = columnas.indexOf(coordenadas.charAt(2));
+           int fOrigen = filas.indexOf(coordenadas.charAt(1));
+           int fDestino = filas.indexOf(coordenadas.charAt(3));
            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
            casillas[cOrigen][fOrigen].setImageDrawable(null);
            return true;
@@ -244,13 +244,13 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
     }
 
-    private void procesarResultados(ArrayList<String> listaPalabras){
-        String palabra;
-        for(int i = 0; i < listaPalabras.size();++i)
+    private void procesarResultados(ArrayList<String> listaCoordenadas){
+        String coordenadas;
+        for(int i = 0; i < listaCoordenadas.size();++i)
         {
-                palabra = listaPalabras.get(i).replace(" ","").toLowerCase();
-                if(palabra.length() == 4){
-                   if(establecerCoordenadas(palabra))
+                coordenadas = listaCoordenadas.get(i).replace(" ","").toLowerCase();
+                if(coordenadas.length() == 4){
+                   if(moverPieza(coordenadas))
                        break;
                 }
 
