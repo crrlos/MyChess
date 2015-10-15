@@ -225,6 +225,19 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
     @Override
     public void onClick(View v) {
+        int position[] = getPosition(v.getId());
+        if(position[0]!= -1){//si el valor es negativo indica que el click no se  realizo en una casilla
+            if(origen == null){
+                origen = casillas[position[0]][position[1]];
+            }else{
+                if(casillas[position[0]][position[1]] != origen) {
+                    casillas[position[0]][position[1]].setImageDrawable(origen.getDrawable());
+                    origen.setImageDrawable(null);
+                    origen = null;
+                }
+            }
+        }
+
 
     }
 }
