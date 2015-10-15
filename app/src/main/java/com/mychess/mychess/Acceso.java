@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+
 public class Acceso extends AppCompatActivity {
 
     @Override
@@ -17,6 +19,7 @@ public class Acceso extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTabs();
+
     }
 
     @Override
@@ -57,6 +60,7 @@ public class Acceso extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+
             }
 
             @Override
