@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-public class Juego extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Juego extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
 
     ImageView casillas[][] = new ImageView[8][8];
     ImageView origen;
@@ -196,4 +196,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             dark = !dark;
         }
     }
+
+    @Override
+    public void onClick(View v) {
+
     }
+}
