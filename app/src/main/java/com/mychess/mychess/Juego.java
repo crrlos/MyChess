@@ -1,5 +1,6 @@
 package com.mychess.mychess;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,6 +27,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         setContentView(R.layout.activity_juego);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        inicializarCasillas();
+        setDefaultColor();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +183,17 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     }
 
 
-    private void setDefaultColor(){
-
+    private void setDefaultColor() {
+        boolean dark = true;
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (dark)
+                    casillas[i][j].setBackgroundColor(Color.parseColor("#7986CB"));
+                else
+                    casillas[i][j].setBackgroundColor(Color.parseColor("#C5CAE9"));
+                dark = !dark;
+            }
+            dark = !dark;
+        }
     }
-}
+    }
