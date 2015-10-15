@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class Juego extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
 
     ImageView casillas[][] = new ImageView[8][8];
@@ -226,6 +228,19 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         return position;//si el click no fue en una casilla se devuelven valores negativos en la posicion
     }
 
+    private void procesarResultados(ArrayList<String> listaPalabras){
+        String palabra;
+        for(int i = 0; i < listaPalabras.size();++i)
+        {
+                palabra = listaPalabras.get(i).replace(" ","");
+                if(palabra.length() == 4){
+                    Toast.makeText(Juego.this, palabra, Toast.LENGTH_SHORT).show();
+                }
+
+        }
+
+    }
+
     @Override
     public void onClick(View v) {
         int position[] = getPosition(v.getId());
@@ -278,6 +293,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         @Override
         public void onResults(Bundle results) {
+            ArrayList<String> listaPalabras = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            procesarResultados(listaPalabras);
+
 
         }
 
