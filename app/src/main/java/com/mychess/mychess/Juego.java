@@ -231,15 +231,10 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         final String columnas = "abcdefgh";
         final String filas = "12345678";
        try{
-
-           Toast.makeText(Juego.this, coordenada, Toast.LENGTH_SHORT).show();
-
-           int cOrigen = columnas.indexOf(coordenada.charAt(0));
+            int cOrigen = columnas.indexOf(coordenada.charAt(0));
            int cDestino = columnas.indexOf(coordenada.charAt(2));
            int fOrigen = filas.indexOf(coordenada.charAt(1));
            int fDestino = filas.indexOf(coordenada.charAt(3));
-
-           Toast.makeText(Juego.this, String.valueOf(cOrigen)+String.valueOf(fOrigen)+String.valueOf(cDestino)+String.valueOf(fDestino), Toast.LENGTH_SHORT).show();
            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
            casillas[cOrigen][fOrigen].setImageDrawable(null);
            return true;
