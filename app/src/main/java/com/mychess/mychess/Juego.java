@@ -206,6 +206,22 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         }
     }
+    private int[]getPosition(int id){
+
+        int position[] = {-1,-1};//inicialización del arreglo con valores negativos para indicar que el click no se realizó en una casilla
+
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if(id == casillas[i][j].getId()){
+                    position[0] = i;
+                    position[1] = j;
+                    return position;//si el click fue en una casilla se retorna la posicion
+                }
+            }
+
+        }
+        return position;//si el click no fue en una casilla se devuelven valores negativos en la posicion
+    }
 
     @Override
     public void onClick(View v) {
