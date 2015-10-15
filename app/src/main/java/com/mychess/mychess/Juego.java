@@ -227,14 +227,36 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         }
         return position;//si el click no fue en una casilla se devuelven valores negativos en la posicion
     }
+    private boolean establecerCoordenadas(String coordenada){
+        final String columnas = "abcdefgh";
+        final String filas = "12345678";
+       try{
+
+           Toast.makeText(Juego.this, coordenada, Toast.LENGTH_SHORT).show();
+
+           int cOrigen = columnas.indexOf(coordenada.charAt(0));
+           int cDestino = columnas.indexOf(coordenada.charAt(2));
+           int fOrigen = filas.indexOf(coordenada.charAt(1));
+           int fDestino = filas.indexOf(coordenada.charAt(3));
+
+           Toast.makeText(Juego.this, String.valueOf(cOrigen)+String.valueOf(fOrigen)+String.valueOf(cDestino)+String.valueOf(fDestino), Toast.LENGTH_SHORT).show();
+           casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+           casillas[cOrigen][fOrigen].setImageDrawable(null);
+           return true;
+       }catch (Exception ex){
+          return false;
+       }
+
+    }
 
     private void procesarResultados(ArrayList<String> listaPalabras){
         String palabra;
         for(int i = 0; i < listaPalabras.size();++i)
         {
-                palabra = listaPalabras.get(i).replace(" ","");
+                palabra = listaPalabras.get(i).replace(" ","").toLowerCase();
                 if(palabra.length() == 4){
-                    Toast.makeText(Juego.this, palabra, Toast.LENGTH_SHORT).show();
+                   if(establecerCoordenadas(palabra))
+                       break;
                 }
 
         }
