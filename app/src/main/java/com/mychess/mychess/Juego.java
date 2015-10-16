@@ -101,6 +101,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         if (id == R.id.jugar) {
             // Handle the camera action
         } else if (id == R.id.amigos) {
+            Intent intent = new Intent(Juego.this,Amigos.class);
+            startActivity(intent);
 
         } else if (id == R.id.logout) {
 
