@@ -252,7 +252,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
                 coordenadas = listaCoordenadas.get(i).replace(" ","").toLowerCase();
                 if(coordenadas.length() == 4){
                    if(validarCoordenadas(coordenadas)){
-
+                            
                        break;
                    }
 

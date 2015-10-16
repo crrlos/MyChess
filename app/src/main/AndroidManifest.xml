@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mychess.mychess" >
-<uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +23,11 @@
         <activity
             android:name=".Juego"
             android:label="@string/title_activity_juego"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".Amigos"
+            android:label="@string/title_activity_amigos"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
