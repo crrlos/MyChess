@@ -112,14 +112,14 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     }
     private void inicializarCasillas() {
 
-        casillas[0][0] = (ImageView) findViewById(R.id.a1);
-        casillas[0][1] = (ImageView) findViewById(R.id.a2);
-        casillas[0][2] = (ImageView) findViewById(R.id.a3);
-        casillas[0][3] = (ImageView) findViewById(R.id.a4);
-        casillas[0][4] = (ImageView) findViewById(R.id.a5);
-        casillas[0][5] = (ImageView) findViewById(R.id.a6);
-        casillas[0][6] = (ImageView) findViewById(R.id.a7);
-        casillas[0][7] = (ImageView) findViewById(R.id.a8);
+        casillas[0][0] = (ImageView) findViewById(R.id.a8);
+        casillas[0][1] = (ImageView) findViewById(R.id.a7);
+        casillas[0][2] = (ImageView) findViewById(R.id.a6);
+        casillas[0][3] = (ImageView) findViewById(R.id.a5);
+        casillas[0][4] = (ImageView) findViewById(R.id.a4);
+        casillas[0][5] = (ImageView) findViewById(R.id.a3);
+        casillas[0][6] = (ImageView) findViewById(R.id.a2);
+        casillas[0][7] = (ImageView) findViewById(R.id.a1);
 
 
         casillas[1][0] = (ImageView) findViewById(R.id.b1);
