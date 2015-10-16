@@ -227,7 +227,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         }
         return position;//si el click no fue en una casilla se devuelven valores negativos en la posicion
     }
-    private boolean moverPieza(String coordenadas){
+    private boolean validarCoordenadas(String coordenadas){
         final String columnas = "abcdefgh";
         final String filas = "87654321";
        try{
@@ -235,8 +235,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
            int cDestino = columnas.indexOf(coordenadas.charAt(2));
            int fOrigen = filas.indexOf(coordenadas.charAt(1));
            int fDestino = filas.indexOf(coordenadas.charAt(3));
-           casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
-           casillas[cOrigen][fOrigen].setImageDrawable(null);
+           /*prueba de que las coordenadas están bien*/
+           casillas[cDestino][fDestino].getDrawable();
+           casillas[cOrigen][cDestino].getDrawable();
            return true;
        }catch (Exception ex){
           return false;
@@ -250,8 +251,11 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         {
                 coordenadas = listaCoordenadas.get(i).replace(" ","").toLowerCase();
                 if(coordenadas.length() == 4){
-                   if(moverPieza(coordenadas))
+                   if(validarCoordenadas(coordenadas)){
+
                        break;
+                   }
+
                 }
 
         }
