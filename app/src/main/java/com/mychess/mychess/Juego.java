@@ -122,68 +122,68 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         casillas[0][7] = (ImageView) findViewById(R.id.a1);
 
 
-        casillas[1][0] = (ImageView) findViewById(R.id.b1);
-        casillas[1][1] = (ImageView) findViewById(R.id.b2);
-        casillas[1][2] = (ImageView) findViewById(R.id.b3);
-        casillas[1][3] = (ImageView) findViewById(R.id.b4);
-        casillas[1][4] = (ImageView) findViewById(R.id.b5);
-        casillas[1][5] = (ImageView) findViewById(R.id.b6);
-        casillas[1][6] = (ImageView) findViewById(R.id.b7);
-        casillas[1][7] = (ImageView) findViewById(R.id.b8);
+        casillas[1][0] = (ImageView) findViewById(R.id.b8);
+        casillas[1][1] = (ImageView) findViewById(R.id.b7);
+        casillas[1][2] = (ImageView) findViewById(R.id.b6);
+        casillas[1][3] = (ImageView) findViewById(R.id.b5);
+        casillas[1][4] = (ImageView) findViewById(R.id.b4);
+        casillas[1][5] = (ImageView) findViewById(R.id.b3);
+        casillas[1][6] = (ImageView) findViewById(R.id.b2);
+        casillas[1][7] = (ImageView) findViewById(R.id.b1);
 
-        casillas[2][0] = (ImageView) findViewById(R.id.c1);
-        casillas[2][1] = (ImageView) findViewById(R.id.c2);
-        casillas[2][2] = (ImageView) findViewById(R.id.c3);
-        casillas[2][3] = (ImageView) findViewById(R.id.c4);
-        casillas[2][4] = (ImageView) findViewById(R.id.c5);
-        casillas[2][5] = (ImageView) findViewById(R.id.c6);
-        casillas[2][6] = (ImageView) findViewById(R.id.c7);
-        casillas[2][7] = (ImageView) findViewById(R.id.c8);
+        casillas[2][0] = (ImageView) findViewById(R.id.c8);
+        casillas[2][1] = (ImageView) findViewById(R.id.c7);
+        casillas[2][2] = (ImageView) findViewById(R.id.c6);
+        casillas[2][3] = (ImageView) findViewById(R.id.c5);
+        casillas[2][4] = (ImageView) findViewById(R.id.c4);
+        casillas[2][5] = (ImageView) findViewById(R.id.c3);
+        casillas[2][6] = (ImageView) findViewById(R.id.c2);
+        casillas[2][7] = (ImageView) findViewById(R.id.c1);
 
-        casillas[3][0] = (ImageView) findViewById(R.id.d1);
-        casillas[3][1] = (ImageView) findViewById(R.id.d2);
-        casillas[3][2] = (ImageView) findViewById(R.id.d3);
-        casillas[3][3] = (ImageView) findViewById(R.id.d4);
-        casillas[3][4] = (ImageView) findViewById(R.id.d5);
-        casillas[3][5] = (ImageView) findViewById(R.id.d6);
-        casillas[3][6] = (ImageView) findViewById(R.id.d7);
-        casillas[3][7] = (ImageView) findViewById(R.id.d8);
+        casillas[3][0] = (ImageView) findViewById(R.id.d8);
+        casillas[3][1] = (ImageView) findViewById(R.id.d7);
+        casillas[3][2] = (ImageView) findViewById(R.id.d6);
+        casillas[3][3] = (ImageView) findViewById(R.id.d5);
+        casillas[3][4] = (ImageView) findViewById(R.id.d4);
+        casillas[3][5] = (ImageView) findViewById(R.id.d3);
+        casillas[3][6] = (ImageView) findViewById(R.id.d2);
+        casillas[3][7] = (ImageView) findViewById(R.id.d1);
 
-        casillas[4][0] = (ImageView) findViewById(R.id.e1);
-        casillas[4][1] = (ImageView) findViewById(R.id.e2);
-        casillas[4][2] = (ImageView) findViewById(R.id.e3);
-        casillas[4][3] = (ImageView) findViewById(R.id.e4);
-        casillas[4][4] = (ImageView) findViewById(R.id.e5);
-        casillas[4][5] = (ImageView) findViewById(R.id.e6);
-        casillas[4][6] = (ImageView) findViewById(R.id.e7);
-        casillas[4][7] = (ImageView) findViewById(R.id.e8);
+        casillas[4][0] = (ImageView) findViewById(R.id.e8);
+        casillas[4][1] = (ImageView) findViewById(R.id.e7);
+        casillas[4][2] = (ImageView) findViewById(R.id.e6);
+        casillas[4][3] = (ImageView) findViewById(R.id.e5);
+        casillas[4][4] = (ImageView) findViewById(R.id.e4);
+        casillas[4][5] = (ImageView) findViewById(R.id.e3);
+        casillas[4][6] = (ImageView) findViewById(R.id.e2);
+        casillas[4][7] = (ImageView) findViewById(R.id.e1);
 
-        casillas[5][0] = (ImageView) findViewById(R.id.f1);
-        casillas[5][1] = (ImageView) findViewById(R.id.f2);
-        casillas[5][2] = (ImageView) findViewById(R.id.f3);
-        casillas[5][3] = (ImageView) findViewById(R.id.f4);
-        casillas[5][4] = (ImageView) findViewById(R.id.f5);
-        casillas[5][5] = (ImageView) findViewById(R.id.f6);
-        casillas[5][6] = (ImageView) findViewById(R.id.f7);
-        casillas[5][7] = (ImageView) findViewById(R.id.f8);
+        casillas[5][0] = (ImageView) findViewById(R.id.f8);
+        casillas[5][1] = (ImageView) findViewById(R.id.f7);
+        casillas[5][2] = (ImageView) findViewById(R.id.f6);
+        casillas[5][3] = (ImageView) findViewById(R.id.f5);
+        casillas[5][4] = (ImageView) findViewById(R.id.f4);
+        casillas[5][5] = (ImageView) findViewById(R.id.f3);
+        casillas[5][6] = (ImageView) findViewById(R.id.f2);
+        casillas[5][7] = (ImageView) findViewById(R.id.f1);
 
-        casillas[6][0] = (ImageView) findViewById(R.id.g1);
-        casillas[6][1] = (ImageView) findViewById(R.id.g2);
-        casillas[6][2] = (ImageView) findViewById(R.id.g3);
-        casillas[6][3] = (ImageView) findViewById(R.id.g4);
-        casillas[6][4] = (ImageView) findViewById(R.id.g5);
-        casillas[6][5] = (ImageView) findViewById(R.id.g6);
-        casillas[6][6] = (ImageView) findViewById(R.id.g7);
-        casillas[6][7] = (ImageView) findViewById(R.id.g8);
+        casillas[6][0] = (ImageView) findViewById(R.id.g8);
+        casillas[6][1] = (ImageView) findViewById(R.id.g7);
+        casillas[6][2] = (ImageView) findViewById(R.id.g6);
+        casillas[6][3] = (ImageView) findViewById(R.id.g5);
+        casillas[6][4] = (ImageView) findViewById(R.id.g4);
+        casillas[6][5] = (ImageView) findViewById(R.id.g3);
+        casillas[6][6] = (ImageView) findViewById(R.id.g2);
+        casillas[6][7] = (ImageView) findViewById(R.id.g1);
 
-        casillas[7][0] = (ImageView) findViewById(R.id.h1);
-        casillas[7][1] = (ImageView) findViewById(R.id.h2);
-        casillas[7][2] = (ImageView) findViewById(R.id.h3);
-        casillas[7][3] = (ImageView) findViewById(R.id.h4);
-        casillas[7][4] = (ImageView) findViewById(R.id.h5);
-        casillas[7][5] = (ImageView) findViewById(R.id.h6);
-        casillas[7][6] = (ImageView) findViewById(R.id.h7);
-        casillas[7][7] = (ImageView) findViewById(R.id.h8);
+        casillas[7][0] = (ImageView) findViewById(R.id.h8);
+        casillas[7][1] = (ImageView) findViewById(R.id.h7);
+        casillas[7][2] = (ImageView) findViewById(R.id.h6);
+        casillas[7][3] = (ImageView) findViewById(R.id.h5);
+        casillas[7][4] = (ImageView) findViewById(R.id.h4);
+        casillas[7][5] = (ImageView) findViewById(R.id.h3);
+        casillas[7][6] = (ImageView) findViewById(R.id.h2);
+        casillas[7][7] = (ImageView) findViewById(R.id.h1);
 
     }
 
@@ -229,7 +229,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     }
     private boolean moverPieza(String coordenadas){
         final String columnas = "abcdefgh";
-        final String filas = "12345678";
+        final String filas = "87654321";
        try{
            int cOrigen = columnas.indexOf(coordenadas.charAt(0));
            int cDestino = columnas.indexOf(coordenadas.charAt(2));
