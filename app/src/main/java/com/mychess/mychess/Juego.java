@@ -86,7 +86,6 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         //noinspection SimplifiableIfStatement
 
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -236,8 +235,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
            int fOrigen = filas.indexOf(coordenadas.charAt(1));
            int fDestino = filas.indexOf(coordenadas.charAt(3));
            /*prueba de que las coordenadas están bien*/
-           casillas[cDestino][fDestino].getDrawable();
-           casillas[cOrigen][cDestino].getDrawable();
+          casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+           casillas[cOrigen][fOrigen].setImageDrawable(null);
            return true;
        }catch (Exception ex){
           return false;
