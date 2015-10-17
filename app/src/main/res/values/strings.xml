@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">MyChess</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="rendirse">Rendirse</string>
+    <string name="tablas">Ofrecer Tablas</string>
+
     <string name="title_activity_juego">MyChess</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
