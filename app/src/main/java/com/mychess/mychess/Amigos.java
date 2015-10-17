@@ -17,6 +17,7 @@ public class Amigos extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
+
         toolbar.setNavigationIcon(R.drawable.oie_transparent);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
