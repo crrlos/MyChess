@@ -3,7 +3,7 @@
     xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
     <!-- Search, should appear as action button -->
     <item android:id="@+id/action_search"
-        android:icon="@drawable/flechaizquierda"
+        android:icon="@drawable/mas"
         android:title="buscar"
         yourapp:showAsAction="ifRoom"  />
 
