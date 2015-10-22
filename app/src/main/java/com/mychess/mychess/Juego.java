@@ -3,6 +3,8 @@ package com.mychess.mychess;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -17,16 +19,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Chronometer;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Juego extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
 
     ImageView casillas[][] = new ImageView[8][8];
     ImageView origen;
     ImageView destino;
+
+    TextView tiempo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +46,30 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         setOnclickListener();
         setDefaultColor();
 
+     tiempo = (TextView) findViewById(R.id.textView18);
+
+        new CountDownTimer(60000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                long time = millisUntilFinished/1000;
+                if(time == 15)
+                {
+                   tiempo.setTextColor(Color.RED);
+                }
+                tiempo.setText(String.valueOf(time));
+            }
+
+            public void onFinish() {
+                tiempo.setText("done!");
+            }
+        }.start();
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(Juego.this);
+                SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(Juego.this);
                 Speech speech = new Speech();
                 speechRecognizer.setRecognitionListener(speech);
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -58,6 +85,10 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
     }
 
     @Override
@@ -278,6 +309,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
 
     }
+
+
+
 
     class Speech implements RecognitionListener{
 
