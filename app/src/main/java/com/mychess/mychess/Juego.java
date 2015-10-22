@@ -28,13 +28,14 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Juego extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
+public class Juego extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     ImageView casillas[][] = new ImageView[8][8];
     ImageView origen;
     ImageView destino;
-
     TextView tiempo;
+
+    Tiempo tiempoMovimiento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,23 +47,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         setOnclickListener();
         setDefaultColor();
 
-     tiempo = (TextView) findViewById(R.id.textView18);
-
-        new CountDownTimer(60000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                long time = millisUntilFinished/1000;
-                if(time == 15)
-                {
-                   tiempo.setTextColor(Color.RED);
-                }
-                tiempo.setText(String.valueOf(time));
-            }
-
-            public void onFinish() {
-                tiempo.setText("done!");
-            }
-        }.start();
+        tiempo = (TextView) findViewById(R.id.textView18);
+        tiempoMovimiento = new Tiempo();
+        tiempoMovimiento.iniciar();
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -85,8 +72,6 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
 
 
     }
@@ -129,7 +114,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         if (id == R.id.jugar) {
             // Handle the camera action
         } else if (id == R.id.amigos) {
-            Intent intent = new Intent(Juego.this,Amigos.class);
+            Intent intent = new Intent(Juego.this, Amigos.class);
             startActivity(intent);
 
         } else if (id == R.id.logout) {
@@ -140,6 +125,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     private void inicializarCasillas() {
 
         casillas[0][0] = (ImageView) findViewById(R.id.a8);
@@ -232,7 +218,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         }
     }
 
-    private void setOnclickListener(){
+    private void setOnclickListener() {
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 casillas[i][j].setOnClickListener(this);
@@ -241,13 +227,14 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         }
     }
-    private int[]getPosition(int id){
 
-        int position[] = {-1,-1};//inicialización del arreglo con valores negativos para indicar que el click no se realizó en una casilla
+    private int[] getPosition(int id) {
+
+        int position[] = {-1, -1};//inicialización del arreglo con valores negativos para indicar que el click no se realizó en una casilla
 
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
-                if(id == casillas[i][j].getId()){
+                if (id == casillas[i][j].getId()) {
                     position[0] = i;
                     position[1] = j;
                     return position;//si el click fue en una casilla se retorna la posicion
@@ -257,36 +244,36 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         }
         return position;//si el click no fue en una casilla se devuelven valores negativos en la posicion
     }
-    private boolean validarCoordenadas(String coordenadas){
+
+    private boolean validarCoordenadas(String coordenadas) {
         final String columnas = "abcdefgh";
         final String filas = "87654321";
-       try{
-           int cOrigen = columnas.indexOf(coordenadas.charAt(0));
-           int cDestino = columnas.indexOf(coordenadas.charAt(2));
-           int fOrigen = filas.indexOf(coordenadas.charAt(1));
-           int fDestino = filas.indexOf(coordenadas.charAt(3));
+        try {
+            int cOrigen = columnas.indexOf(coordenadas.charAt(0));
+            int cDestino = columnas.indexOf(coordenadas.charAt(2));
+            int fOrigen = filas.indexOf(coordenadas.charAt(1));
+            int fDestino = filas.indexOf(coordenadas.charAt(3));
            /*prueba de que las coordenadas están bien*/
-          casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
-           casillas[cOrigen][fOrigen].setImageDrawable(null);
-           return true;
-       }catch (Exception ex){
-          return false;
-       }
+            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+            casillas[cOrigen][fOrigen].setImageDrawable(null);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
 
     }
 
-    private void procesarResultados(ArrayList<String> listaCoordenadas){
+    private void procesarResultados(ArrayList<String> listaCoordenadas) {
         String coordenadas;
-        for(int i = 0; i < listaCoordenadas.size();++i)
-        {
-                coordenadas = listaCoordenadas.get(i).replace(" ","").toLowerCase();
-                if(coordenadas.length() == 4){
-                   if(validarCoordenadas(coordenadas)){
-                            
-                       break;
-                   }
+        for (int i = 0; i < listaCoordenadas.size(); ++i) {
+            coordenadas = listaCoordenadas.get(i).replace(" ", "").toLowerCase();
+            if (coordenadas.length() == 4) {
+                if (validarCoordenadas(coordenadas)) {
 
+                    break;
                 }
+
+            }
 
         }
 
@@ -295,13 +282,14 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     @Override
     public void onClick(View v) {
         int position[] = getPosition(v.getId());
-        if(position[0]!= -1){//si el valor es negativo indica que el click no se  realizo en una casilla
-            if(origen == null){
+        if (position[0] != -1) {//si el valor es negativo indica que el click no se  realizo en una casilla
+            if (origen == null) {
                 origen = casillas[position[0]][position[1]];
-            }else{
-                if(casillas[position[0]][position[1]] != origen) {
+            } else {
+                if (casillas[position[0]][position[1]] != origen) {
                     casillas[position[0]][position[1]].setImageDrawable(origen.getDrawable());
                     origen.setImageDrawable(null);
+                    tiempoMovimiento.reiniciar();
                     origen = null;
                 }
             }
@@ -311,9 +299,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     }
 
 
-
-
-    class Speech implements RecognitionListener{
+    class Speech implements RecognitionListener {
 
         @Override
         public void onReadyForSpeech(Bundle params) {
@@ -362,5 +348,50 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         public void onEvent(int eventType, Bundle params) {
 
         }
+    }
+
+    class Tiempo {
+        CountDown countDown;
+
+        public void iniciar() {
+            countDown = new CountDown(60000, 1000);
+            countDown.start();
+        }
+
+        public void detener() {
+            countDown.cancel();
+
+        }
+
+        public void reiniciar() {
+            tiempo.setText("60");
+            tiempo.setTextColor(Color.WHITE);
+            countDown.cancel();
+        }
+
+
+        class CountDown extends CountDownTimer {
+
+            public CountDown(long millisInFuture, long countDownInterval) {
+                super(millisInFuture, countDownInterval);
+            }
+
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long time = millisUntilFinished / 1000;
+                tiempo.setText(String.valueOf(time));
+                if (time == 15)
+                    tiempo.setTextColor(Color.RED);
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }
+
+
     }
 }
