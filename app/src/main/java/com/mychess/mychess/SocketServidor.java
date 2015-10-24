@@ -18,7 +18,7 @@ class SocketServidor {
 
     }
 
-    public  Socket getSocket() {
+    public static  Socket getSocket() {
         return socket;
     }
 
