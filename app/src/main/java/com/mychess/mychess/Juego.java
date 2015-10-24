@@ -1,10 +1,14 @@
 package com.mychess.mychess;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.IBinder;
 import android.os.SystemClock;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -32,6 +36,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Juego extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+    Servicio mService;
+    boolean mBound = false;
 
     ImageView casillas[][] = new ImageView[8][8];
     ImageView origen;
@@ -81,6 +88,27 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this,Servicio.class);
+        bindService(intent,mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Servicio.LocalBinder binder = (Servicio.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mBound = false;
+        }
+    };
 
     @Override
     public void onBackPressed() {
