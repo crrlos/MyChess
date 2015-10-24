@@ -2,6 +2,7 @@ package com.mychess.mychess;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
@@ -393,5 +394,13 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         }
 
 
+    }
+    class RecibirMovimientos extends AsyncTask<Void,String,Boolean>{
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return null;
+        }
     }
 }
