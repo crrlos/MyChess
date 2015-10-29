@@ -30,7 +30,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -62,13 +66,15 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         tiempoMovimiento.iniciar();
 
         new SocketServidor().conectar();
-        new RecibirMovimientos().execute();
+       RecibirMovimientos recibirMovimientos = new RecibirMovimientos();
+        recibirMovimientos.execute();
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(Juego.this);
                 Speech speech = new Speech();
                 speechRecognizer.setRecognitionListener(speech);
@@ -303,6 +309,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             coordenadas = listaCoordenadas.get(i).replace(" ", "").toLowerCase();
             if (coordenadas.length() == 4) {
                 if (validarCoordenadas(coordenadas)) {
+                    enviarMovimiento(coordenadas);
 
                     break;
                 }
@@ -310,6 +317,18 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             }
 
         }
+
+    }
+
+    private void enviarMovimiento(String coordendas) {
+        DataOutputStream out = null;
+        try {
+            out = new DataOutputStream(SocketServidor.getSocket().getOutputStream());
+            out.writeUTF(coordendas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -430,14 +449,18 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     }
     class RecibirMovimientos extends AsyncTask<Void,String,Boolean>{
 
+        Socket socket;
+        public RecibirMovimientos() {
+           socket = SocketServidor.getSocket();
+        }
 
-        @Override
         protected Boolean doInBackground(Void... params) {
             boolean continuar = true;
             while(continuar){
                 try{
                     Thread.sleep(250);
-                    InputStream fromServer = SocketServidor.getSocket().getInputStream();
+                   publishProgress(String.valueOf(socket));
+                    InputStream fromServer =  socket.getInputStream();
                     DataInputStream in = new DataInputStream(fromServer);
                     publishProgress(in.readUTF());
                 }catch(Exception ex){}
@@ -449,7 +472,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            validarCoordenadas(values[0]);
+            //validarCoordenadas(values[0]);
+            Toast.makeText(Juego.this, values[0], Toast.LENGTH_SHORT).show();
         }
     }
+
 }

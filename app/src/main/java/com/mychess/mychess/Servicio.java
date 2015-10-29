@@ -6,8 +6,10 @@ import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.provider.ContactsContract;
+import android.widget.Toast;
 
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 public class Servicio extends Service {
@@ -31,20 +33,37 @@ public class Servicio extends Service {
     }
 
    public void enviarMovimiento(final String movimiento){
+       Toast.makeText(getApplicationContext(), "aqui voy", Toast.LENGTH_SHORT).show();
 
-       new AsyncTask<Void,String,Integer>(){
+       new AsyncTask<Void,String,Boolean>(){
 
            @Override
-           protected Integer doInBackground(Void... params) {
-               try{
-                   OutputStream toServer = SocketServidor.getSocket().getOutputStream();
-                   DataOutputStream out = new DataOutputStream(toServer);
-                   out.writeUTF(movimiento);
-               }catch (Exception ex){
+           protected Boolean doInBackground(Void... params) {
 
+               OutputStream toServer = null;
+               try {
+                   toServer = SocketServidor.getSocket().getOutputStream();
+                   DataOutputStream out = new DataOutputStream(toServer);
+                   publishProgress("e2e4");
+                   out.writeUTF("e2e4");
+                   return true;
+               } catch (IOException e) {
+                   publishProgress(e.getMessage());
+                   return false;
                }
-               return null;
+
+
+
+
            }
+
+           @Override
+           protected void onProgressUpdate(String... values) {
+               super.onProgressUpdate(values);
+               Toast.makeText(getApplicationContext(),values[0], Toast.LENGTH_SHORT).show();
+           }
+
+
        }.execute();
    }
 }

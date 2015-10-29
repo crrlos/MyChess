@@ -31,9 +31,8 @@ class SocketServidor {
         protected Boolean doInBackground(Void... params) {
             try{
                 socket = new Socket("servermychess.tk",40000);
-                OutputStream toServer = socket.getOutputStream();
-                DataOutputStream out = new DataOutputStream(toServer);
-                out.writeUTF("crrlos");
+
+
 
             }catch(Exception ex){
 
