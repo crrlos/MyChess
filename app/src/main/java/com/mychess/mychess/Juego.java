@@ -24,6 +24,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.mychess.mychess.Chess.Chess;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -31,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+
 
 public class Juego extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -41,8 +45,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     ImageView origen;
     ImageView destino;
     TextView tiempo;
-
     Tiempo tiempoMovimiento;
+    Chess chess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +61,14 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         tiempo = (TextView) findViewById(R.id.textView18);
         tiempoMovimiento = new Tiempo();
         tiempoMovimiento.iniciar();
+        /* inicializcion del nuevo juego*/
+        chess = new Chess();
+        chess.newGame();
+        /*---------------------*/
 
         new SocketServidor().conectar();
        RecibirMovimientos recibirMovimientos = new RecibirMovimientos();
-        recibirMovimientos.execute();
+       recibirMovimientos.execute();
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -302,7 +310,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             coordenadas = listaCoordenadas.get(i).replace(" ", "").toLowerCase();
             if (coordenadas.length() == 4) {
                 if (validarCoordenadas(coordenadas)) {
-                    enviarMovimiento(coordenadas);
+
+                    Toast.makeText(Juego.this, String.valueOf( chess.mover(coordenadas.substring(0,2),coordenadas.substring(2,4))), Toast.LENGTH_SHORT).show();
 
                     break;
                 }
