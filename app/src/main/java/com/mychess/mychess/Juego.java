@@ -367,12 +367,18 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     private void moverPieza(int n,String coordenada){
         if(jugadaLocal){
             enviarMovimiento(crearCoordenada());
-            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
-            casillas[cOrigen][fOrigen].setImageDrawable(null);
+                if(!enroque()) {
+                    casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+                    casillas[cOrigen][fOrigen].setImageDrawable(null);
+                }
+
         }else{
             validarCoordenadas(coordenada);
-            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
-            casillas[cOrigen][fOrigen].setImageDrawable(null);
+                if(!enroque()) {
+                    casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+                    casillas[cOrigen][fOrigen].setImageDrawable(null);
+                }
+
         }
 
         jugadaLocal = !jugadaLocal;
@@ -382,6 +388,49 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         if(n == 1){
             Toast.makeText(Juego.this, "Jaque Mate", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private boolean enroque(){
+
+        if(enroqueBlanco)
+        if(cOrigen == 4 && fOrigen == 7 && cDestino == 6  && fDestino == 7)
+        {
+            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+            casillas[cOrigen][fOrigen].setImageDrawable(null);
+            casillas[5][7].setImageDrawable(casillas[7][7].getDrawable());
+            casillas[7][7].setImageDrawable(null);
+            enroqueBlanco = !enroqueBlanco;
+            return true;
+        }else if(cOrigen == 4 && fOrigen == 7 && cDestino == 2 && fDestino == 7)
+        {
+            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+            casillas[cOrigen][fOrigen].setImageDrawable(null);
+            casillas[3][7].setImageDrawable(casillas[0][7].getDrawable());
+            casillas[0][7].setImageDrawable(null);
+            enroqueBlanco = !enroqueBlanco;
+            return true;
+
+        }
+        if(enroqueNegro)
+            if(cOrigen == 4 && fOrigen == 0 && cDestino == 6  && fDestino == 0)
+            {
+                casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+                casillas[cOrigen][fOrigen].setImageDrawable(null);
+                casillas[5][0].setImageDrawable(casillas[7][0].getDrawable());
+                casillas[7][0].setImageDrawable(null);
+                enroqueNegro = !enroqueNegro;
+                return true;
+            }else if(cOrigen == 4 && fOrigen == 0 && cDestino == 2 && fDestino == 0)
+            {
+                casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+                casillas[cOrigen][fOrigen].setImageDrawable(null);
+                casillas[3][0].setImageDrawable(casillas[0][0].getDrawable());
+                casillas[0][0].setImageDrawable(null);
+                enroqueNegro = !enroqueNegro;
+                return true;
+
+            }
+        return false;
     }
 
     private String crearCoordenada() {
