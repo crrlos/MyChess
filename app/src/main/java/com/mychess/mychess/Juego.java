@@ -387,7 +387,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
                     origen = null;
                     cDestino = position[0];
                     fDestino = position[1];
-
+                    validarMovimiento(crearCoordenada());
 
             }
         }
