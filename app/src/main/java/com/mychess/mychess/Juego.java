@@ -51,6 +51,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     int fOrigen;
     int fDestino;
 
+    boolean enroqueBlanco = true;
+    boolean enroqueNegro = true;
+
     boolean jugadaLocal = false;// sirve para difenciar entre una jugada local y una remota
     Chess chess;
 
