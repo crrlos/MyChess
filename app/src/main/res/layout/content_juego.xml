@@ -838,15 +838,14 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:src="@drawable/micro_microphone_4764"
-        android:layout_below="@+id/textView13"
-        android:layout_toRightOf="@+id/textView18"
-        android:layout_toEndOf="@+id/textView18" />
+        android:layout_below="@+id/textView18"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="cuenta"
+        android:text="Small Text"
         android:id="@+id/textView18"
         android:textColor="#fcfefc"
         android:layout_marginTop="24dp"
