@@ -312,9 +312,26 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             if (coordenadas.length() == 4) {
                 if (validarCoordenadas(coordenadas)) {
 
-                    Toast.makeText(Juego.this, String.valueOf(chess.mover(coordenadas.substring(0, 2), coordenadas.substring(2, 4))), Toast.LENGTH_SHORT).show();
 
+                    switch (chess.mover(coordenadas.substring(0,2),coordenadas.substring(2,4)))
+                    {
+                        case 0:
+                            moverPieza();
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            Toast.makeText(Juego.this, "movimiento no valido", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            Toast.makeText(Juego.this, "movimiento no valido", Toast.LENGTH_SHORT).show();
+                            break;
+
+                    }
                     break;
+
                 }
 
             }
