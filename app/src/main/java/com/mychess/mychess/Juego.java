@@ -293,15 +293,17 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     private boolean validarCoordenadas(String coordenadas) {
         final String columnas = "abcdefgh";
         final String filas = "87654321";
-        try {
+
             cOrigen = columnas.indexOf(coordenadas.charAt(0));
             cDestino = columnas.indexOf(coordenadas.charAt(2));
             fOrigen = filas.indexOf(coordenadas.charAt(1));
             fDestino = filas.indexOf(coordenadas.charAt(3));
+
+            if(cOrigen == -1 || cDestino == -1 || fOrigen == -1 || fDestino == -1)
+                return false;
+
             return true;
-        } catch (Exception ex) {
-            return false;
-        }
+
 
     }
 
