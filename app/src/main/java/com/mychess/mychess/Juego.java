@@ -9,13 +9,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.IBinder;
-import android.os.SystemClock;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,20 +21,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Chronometer;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Juego extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -448,18 +441,13 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
     }
     class RecibirMovimientos extends AsyncTask<Void,String,Boolean>{
-
         Socket socket;
-        public RecibirMovimientos() {
-           socket = SocketServidor.getSocket();
-        }
-
         protected Boolean doInBackground(Void... params) {
+            socket = SocketServidor.getSocket();
             boolean continuar = true;
             while(continuar){
                 try{
                     Thread.sleep(250);
-                   publishProgress(String.valueOf(socket));
                     InputStream fromServer =  socket.getInputStream();
                     DataInputStream in = new DataInputStream(fromServer);
                     publishProgress(in.readUTF());
@@ -472,8 +460,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            //validarCoordenadas(values[0]);
-            Toast.makeText(Juego.this, values[0], Toast.LENGTH_SHORT).show();
+            validarCoordenadas(values[0]);
+
         }
     }
 
