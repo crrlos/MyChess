@@ -71,8 +71,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         /*---------------------*/
 
         new SocketServidor().conectar();
-       RecibirMovimientos recibirMovimientos = new RecibirMovimientos();
-       recibirMovimientos.execute();
+        RecibirMovimientos recibirMovimientos = new RecibirMovimientos();
+        recibirMovimientos.execute();
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -103,8 +103,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent = new Intent(this,Servicio.class);
-        bindService(intent,mConnection, Context.BIND_AUTO_CREATE);
+        Intent intent = new Intent(this, Servicio.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -298,9 +298,6 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             cDestino = columnas.indexOf(coordenadas.charAt(2));
             fOrigen = filas.indexOf(coordenadas.charAt(1));
             fDestino = filas.indexOf(coordenadas.charAt(3));
-           /*prueba de que las coordenadas están bien*/
-            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
-            casillas[cOrigen][fOrigen].setImageDrawable(null);
             return true;
         } catch (Exception ex) {
             return false;
@@ -315,7 +312,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             if (coordenadas.length() == 4) {
                 if (validarCoordenadas(coordenadas)) {
 
-                    Toast.makeText(Juego.this, String.valueOf( chess.mover(coordenadas.substring(0,2),coordenadas.substring(2,4))), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Juego.this, String.valueOf(chess.mover(coordenadas.substring(0, 2), coordenadas.substring(2, 4))), Toast.LENGTH_SHORT).show();
 
                     break;
                 }
@@ -336,6 +333,10 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         }
 
 
+    }
+    private void moverPieza(){
+        casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+        casillas[cOrigen][fOrigen].setImageDrawable(null);
     }
 
     @Override
@@ -453,18 +454,21 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
 
     }
-    class RecibirMovimientos extends AsyncTask<Void,String,Boolean>{
+
+    class RecibirMovimientos extends AsyncTask<Void, String, Boolean> {
         Socket socket;
+
         protected Boolean doInBackground(Void... params) {
             socket = SocketServidor.getSocket();
             boolean continuar = true;
-            while(continuar){
-                try{
+            while (continuar) {
+                try {
                     Thread.sleep(250);
-                    InputStream fromServer =  socket.getInputStream();
+                    InputStream fromServer = socket.getInputStream();
                     DataInputStream in = new DataInputStream(fromServer);
                     publishProgress(in.readUTF());
-                }catch(Exception ex){}
+                } catch (Exception ex) {
+                }
 
             }
             return null;
