@@ -314,7 +314,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             if (coordenadas.length() == 4) {
                 if (validarCoordenadas(coordenadas)) {
 
-                    validarCoordenadas(coordenadas);
+                    validarMovimiento(coordenadas);
                      break;
 
                 }
