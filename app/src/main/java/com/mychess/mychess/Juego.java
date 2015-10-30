@@ -50,6 +50,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     int cDestino;
     int fOrigen;
     int fDestino;
+
+    boolean jugadaLocal = false;// sirve para difenciar entre una jugada local y una remota
     Chess chess;
 
     @Override
@@ -79,12 +81,14 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(Juego.this);
-                Speech speech = new Speech();
-                speechRecognizer.setRecognitionListener(speech);
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                speechRecognizer.startListening(intent);
+                if(jugadaLocal) {
+                    SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(Juego.this);
+                    Speech speech = new Speech();
+                    speechRecognizer.setRecognitionListener(speech);
+                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    speechRecognizer.startListening(intent);
+                }else
+                    Toast.makeText(Juego.this, "No es su turno", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -330,6 +334,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         try {
             out = new DataOutputStream(SocketServidor.getSocket().getOutputStream());
             out.writeUTF(coordendas);
+            tiempoMovimiento.reiniciar();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -344,23 +349,32 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
                 Toast.makeText(Juego.this, "movimiento no valido", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
-                moverPieza(1);
+                moverPieza(1,coordenadas);
                 break;
             case 4:
                 Toast.makeText(Juego.this, "movimiento no valido", Toast.LENGTH_SHORT).show();
                 break;
             case 0:
-                moverPieza(2);
+                moverPieza(2,coordenadas);
                 break;
 
         }
     }
 
-    private void moverPieza(int n){
-        
-        enviarMovimiento(crearCoordenada());
-        casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
-        casillas[cOrigen][fOrigen].setImageDrawable(null);
+    private void moverPieza(int n,String coordenada){
+        if(jugadaLocal){
+            enviarMovimiento(crearCoordenada());
+            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+            casillas[cOrigen][fOrigen].setImageDrawable(null);
+        }else{
+            validarCoordenadas(coordenada);
+            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+            casillas[cOrigen][fOrigen].setImageDrawable(null);
+        }
+
+        jugadaLocal = !jugadaLocal;
+
+
         
         if(n == 1){
             Toast.makeText(Juego.this, "Jaque Mate", Toast.LENGTH_SHORT).show();
@@ -382,20 +396,24 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
     @Override
     public void onClick(View v) {
-        int position[] = getPosition(v.getId());
-        if (position[0] != -1) {//si el valor es negativo indica que el click no se  realizo en una casilla
-            if (origen == null) {
-                origen = casillas[position[0]][position[1]];
-                cOrigen = position[0];
-                fOrigen = position[1];
-            } else {
+        if(jugadaLocal) {
+            int position[] = getPosition(v.getId());
+            if (position[0] != -1) {//si el valor es negativo indica que el click no se  realizo en una casilla
+                if (origen == null) {
+                    origen = casillas[position[0]][position[1]];
+                    cOrigen = position[0];
+                    fOrigen = position[1];
+                } else {
 
                     origen = null;
                     cDestino = position[0];
                     fDestino = position[1];
                     validarMovimiento(crearCoordenada());
 
+                }
             }
+        }else{
+            Toast.makeText(Juego.this, "No es su turno", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -507,7 +525,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             while (continuar) {
                 try {
                     Thread.sleep(250);
-                    InputStream fromServer = socket.getInputStream();
+                    InputStream fromServer = SocketServidor.getSocket().getInputStream();
                     DataInputStream in = new DataInputStream(fromServer);
                     publishProgress(in.readUTF());
                 } catch (Exception ex) {
@@ -520,7 +538,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            validarCoordenadas(values[0]);
+            validarMovimiento(values[0]);
+            Toast.makeText(Juego.this, values[0], Toast.LENGTH_SHORT).show();
+            tiempoMovimiento.iniciar();
 
         }
     }
