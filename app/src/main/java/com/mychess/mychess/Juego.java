@@ -361,19 +361,34 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         casillas[cOrigen][fOrigen].setImageDrawable(null);
     }
 
+    private String crearCoordenada() {
+        String coordenada = "";
+        final String columnas = "abcdefgh";
+        final String filas = "87654321";
+        coordenada += columnas.charAt(cOrigen);
+        coordenada += filas.charAt(fOrigen);
+        coordenada += columnas.charAt(cDestino);
+        coordenada += filas.charAt(fDestino);
+
+
+        return coordenada;
+    }
+
     @Override
     public void onClick(View v) {
         int position[] = getPosition(v.getId());
         if (position[0] != -1) {//si el valor es negativo indica que el click no se  realizo en una casilla
             if (origen == null) {
                 origen = casillas[position[0]][position[1]];
+                cOrigen = position[0];
+                fOrigen = position[1];
             } else {
-                if (casillas[position[0]][position[1]] != origen) {
-                    casillas[position[0]][position[1]].setImageDrawable(origen.getDrawable());
-                    origen.setImageDrawable(null);
-                    tiempoMovimiento.reiniciar();
+
                     origen = null;
-                }
+                    cDestino = position[0];
+                    fDestino = position[1];
+
+
             }
         }
 
