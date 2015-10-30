@@ -46,6 +46,10 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     ImageView destino;
     TextView tiempo;
     Tiempo tiempoMovimiento;
+    int cOrigen;
+    int cDestino;
+    int fOrigen;
+    int fDestino;
     Chess chess;
 
     @Override
@@ -290,10 +294,10 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         final String columnas = "abcdefgh";
         final String filas = "87654321";
         try {
-            int cOrigen = columnas.indexOf(coordenadas.charAt(0));
-            int cDestino = columnas.indexOf(coordenadas.charAt(2));
-            int fOrigen = filas.indexOf(coordenadas.charAt(1));
-            int fDestino = filas.indexOf(coordenadas.charAt(3));
+            cOrigen = columnas.indexOf(coordenadas.charAt(0));
+            cDestino = columnas.indexOf(coordenadas.charAt(2));
+            fOrigen = filas.indexOf(coordenadas.charAt(1));
+            fDestino = filas.indexOf(coordenadas.charAt(3));
            /*prueba de que las coordenadas están bien*/
             casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
             casillas[cOrigen][fOrigen].setImageDrawable(null);
