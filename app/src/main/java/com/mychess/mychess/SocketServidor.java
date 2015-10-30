@@ -12,6 +12,10 @@ class SocketServidor {
 
     private static  Socket socket;
 
+    SocketServidor(){
+        socket = new Socket();
+    }
+
 
     public  void conectar(){
 
