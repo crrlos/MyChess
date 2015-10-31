@@ -337,9 +337,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 if (dark)
-                    casillas[i][j].setBackgroundColor(Color.parseColor("#7986CB"));
+                    casillas[i][j].setBackgroundResource(R.color.casillablanca);
                 else
-                    casillas[i][j].setBackgroundColor(Color.parseColor("#C5CAE9"));
+                    casillas[i][j].setBackgroundResource(R.color.casillnegra);
                 dark = !dark;
             }
             dark = !dark;
