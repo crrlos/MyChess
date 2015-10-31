@@ -46,6 +46,10 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     ImageView destino;
     TextView tiempo;
     Tiempo tiempoMovimiento;
+
+    TextView nombreColumnas[] = new TextView[8];
+    TextView numeroFila[] = new TextView[8];
+
     int cOrigen;
     int cDestino;
     int fOrigen;
@@ -63,7 +67,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         setContentView(R.layout.activity_juego);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        inicializarCasillasBlanco();
+        inicializarCasillasNegro();
         setOnclickListener();
         setDefaultColor();
 
@@ -177,6 +181,66 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private void inicializarCampos(int n){
+        nombreColumnas[0] = (TextView) findViewById(R.id.columnaa);
+        nombreColumnas[1] = (TextView) findViewById(R.id.columnab);
+        nombreColumnas[2] = (TextView) findViewById(R.id.columnac);
+        nombreColumnas[3] = (TextView) findViewById(R.id.columnad);
+        nombreColumnas[4] = (TextView) findViewById(R.id.columnae);
+        nombreColumnas[5] = (TextView) findViewById(R.id.columnaf);
+        nombreColumnas[6] = (TextView) findViewById(R.id.columnag);
+        nombreColumnas[7] = (TextView) findViewById(R.id.columnah);
+
+        numeroFila[0] = (TextView) findViewById(R.id.fila1);
+        numeroFila[1]= (TextView) findViewById(R.id.fila2);
+        numeroFila[2]= (TextView) findViewById(R.id.fila3);
+        numeroFila[3]= (TextView) findViewById(R.id.fila4);
+        numeroFila[4]= (TextView) findViewById(R.id.fila5);
+        numeroFila[5]= (TextView) findViewById(R.id.fila6);
+        numeroFila[6]= (TextView) findViewById(R.id.fila7);
+        numeroFila[7]= (TextView) findViewById(R.id.fila8);
+
+        nombreColumnas[0].setText("a");
+        nombreColumnas[1].setText("b");
+        nombreColumnas[2].setText("c");
+        nombreColumnas[3].setText("d");
+        nombreColumnas[4].setText("e");
+        nombreColumnas[5].setText("f");
+        nombreColumnas[6].setText("g");
+        nombreColumnas[7].setText("h");
+
+        numeroFila[0].setText("1");
+        numeroFila[1].setText("2");
+        numeroFila[2].setText("3");
+        numeroFila[3].setText("4");
+        numeroFila[4].setText("5");
+        numeroFila[5].setText("6");
+        numeroFila[6].setText("7");
+        numeroFila[7].setText("8");
+
+        if(n == 2)
+        {
+            nombreColumnas[0].setText("h");
+            nombreColumnas[1].setText("g");
+            nombreColumnas[2].setText("f");
+            nombreColumnas[3].setText("e");
+            nombreColumnas[4].setText("d");
+            nombreColumnas[5].setText("c");
+            nombreColumnas[6].setText("b");
+            nombreColumnas[7].setText("a");
+
+            numeroFila[0].setText("8");
+            numeroFila[1].setText("7");
+            numeroFila[2].setText("6");
+            numeroFila[3].setText("5");
+            numeroFila[4].setText("4");
+            numeroFila[5].setText("3");
+            numeroFila[6].setText("2");
+            numeroFila[7].setText("1");
+        }
+
+
+    }
 
     private void inicializarCasillasBlanco() {
 
@@ -253,6 +317,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         casillas[7][6] = (ImageView) findViewById(R.id.h2);
         casillas[7][7] = (ImageView) findViewById(R.id.h1);
         colocarPiezas(1);
+        inicializarCampos(1);
 
     }
     private void inicializarCasillasNegro() {
@@ -329,7 +394,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         casillas[7][5] = (ImageView) findViewById(R.id.a6);
         casillas[7][6] = (ImageView) findViewById(R.id.a7);
         casillas[7][7] = (ImageView) findViewById(R.id.a8);
-
+        colocarPiezas(1);
+        inicializarCampos(2);
     }
 
 
@@ -353,10 +419,10 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         casillas[0][7].setImageResource(bando == 1?R.mipmap.alpha_wr:R.mipmap.alpha_br);
         casillas[7][7].setImageResource(bando == 1?R.mipmap.alpha_wr:R.mipmap.alpha_br);
 
-        casillas[0][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[1][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[1][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[0][6].setImageResource(bando == 1 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[1][6].setImageResource(bando == 1 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
         casillas[2][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[3][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
         casillas[4][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
         casillas[5][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
         casillas[6][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
@@ -372,26 +438,26 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         casillas[4][7].setImageResource(bando == 1?R.mipmap.alpha_wk:R.mipmap.alpha_bk);
 
 
-        casillas[7][0].setImageResource(bando == 2?R.mipmap.alpha_wr:R.mipmap.alpha_br);
-        casillas[0][0].setImageResource(bando == 2?R.mipmap.alpha_wr:R.mipmap.alpha_br);
+        casillas[7][0].setImageResource(bando == 2 ? R.mipmap.alpha_wr : R.mipmap.alpha_br);
+        casillas[0][0].setImageResource(bando == 2 ? R.mipmap.alpha_wr : R.mipmap.alpha_br);
 
-        casillas[0][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[1][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[2][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[3][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[4][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[5][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[6][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[7][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[0][1].setImageResource(bando == 2 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[1][1].setImageResource(bando == 2 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[2][1].setImageResource(bando == 2 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[3][1].setImageResource(bando == 2 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[4][1].setImageResource(bando == 2 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[5][1].setImageResource(bando == 2 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[6][1].setImageResource(bando == 2 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[7][1].setImageResource(bando == 2 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
 
-        casillas[1][0].setImageResource(bando == 2?R.mipmap.alpha_wn:R.mipmap.alpha_bn);
-        casillas[6][0].setImageResource(bando == 2?R.mipmap.alpha_wn:R.mipmap.alpha_bn);
+        casillas[1][0].setImageResource(bando == 2 ? R.mipmap.alpha_wn : R.mipmap.alpha_bn);
+        casillas[6][0].setImageResource(bando == 2 ? R.mipmap.alpha_wn : R.mipmap.alpha_bn);
 
-        casillas[2][0].setImageResource(bando == 2?R.mipmap.alpha_wb:R.mipmap.alpha_bb);
-        casillas[5][0].setImageResource(bando == 2?R.mipmap.alpha_wb:R.mipmap.alpha_bb);
+        casillas[2][0].setImageResource(bando == 2 ? R.mipmap.alpha_wb : R.mipmap.alpha_bb);
+        casillas[5][0].setImageResource(bando == 2 ? R.mipmap.alpha_wb : R.mipmap.alpha_bb);
 
-        casillas[3][0].setImageResource(bando == 2?R.mipmap.alpha_wq:R.mipmap.alpha_bq);
-        casillas[4][0].setImageResource(bando == 2?R.mipmap.alpha_wk:R.mipmap.alpha_bk);
+        casillas[3][0].setImageResource(bando == 2 ? R.mipmap.alpha_wq : R.mipmap.alpha_bq);
+        casillas[4][0].setImageResource(bando == 2 ? R.mipmap.alpha_wk : R.mipmap.alpha_bk);
 
 
 
