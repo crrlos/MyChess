@@ -63,7 +63,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         setContentView(R.layout.activity_juego);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        inicializarCasillasNegro();
+        inicializarCasillasBlanco();
         setOnclickListener();
         setDefaultColor();
 
@@ -252,6 +252,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         casillas[7][5] = (ImageView) findViewById(R.id.h3);
         casillas[7][6] = (ImageView) findViewById(R.id.h2);
         casillas[7][7] = (ImageView) findViewById(R.id.h1);
+        colocarPiezas(1);
 
     }
     private void inicializarCasillasNegro() {
@@ -344,6 +345,56 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             }
             dark = !dark;
         }
+    }
+
+    private void colocarPiezas(int bando){
+
+
+        casillas[0][7].setImageResource(bando == 1?R.mipmap.alpha_wr:R.mipmap.alpha_br);
+        casillas[7][7].setImageResource(bando == 1?R.mipmap.alpha_wr:R.mipmap.alpha_br);
+
+        casillas[0][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[1][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[1][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[2][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[4][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[5][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[6][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[7][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+
+        casillas[1][7].setImageResource(bando == 1?R.mipmap.alpha_wn:R.mipmap.alpha_bn);
+        casillas[6][7].setImageResource(bando == 1?R.mipmap.alpha_wn:R.mipmap.alpha_bn);
+
+        casillas[2][7].setImageResource(bando == 1?R.mipmap.alpha_wb:R.mipmap.alpha_bb);
+        casillas[5][7].setImageResource(bando == 1?R.mipmap.alpha_wb:R.mipmap.alpha_bb);
+
+        casillas[3][7].setImageResource(bando == 1?R.mipmap.alpha_wq:R.mipmap.alpha_bq);
+        casillas[4][7].setImageResource(bando == 1?R.mipmap.alpha_wk:R.mipmap.alpha_bk);
+
+
+        casillas[7][0].setImageResource(bando == 2?R.mipmap.alpha_wr:R.mipmap.alpha_br);
+        casillas[0][0].setImageResource(bando == 2?R.mipmap.alpha_wr:R.mipmap.alpha_br);
+
+        casillas[0][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[1][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[2][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[3][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[4][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[5][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[6][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[7][1].setImageResource(bando == 2?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+
+        casillas[1][0].setImageResource(bando == 2?R.mipmap.alpha_wn:R.mipmap.alpha_bn);
+        casillas[6][0].setImageResource(bando == 2?R.mipmap.alpha_wn:R.mipmap.alpha_bn);
+
+        casillas[2][0].setImageResource(bando == 2?R.mipmap.alpha_wb:R.mipmap.alpha_bb);
+        casillas[5][0].setImageResource(bando == 2?R.mipmap.alpha_wb:R.mipmap.alpha_bb);
+
+        casillas[3][0].setImageResource(bando == 2?R.mipmap.alpha_wq:R.mipmap.alpha_bq);
+        casillas[4][0].setImageResource(bando == 2?R.mipmap.alpha_wk:R.mipmap.alpha_bk);
+
+
+
     }
 
     private void setOnclickListener() {
