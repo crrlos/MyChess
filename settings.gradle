@@ -1,1 +1,1 @@
-include ':app', ':mylibrary', ':ChessUSO2015'
+include ':app'
