@@ -14,7 +14,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="47dp"
         android:hint="nombre de usuario"
-        android:textColorHint="#C5CAE9"/>
+        android:textColorHint="#C5CAE9"
+        android:textColor="@color/colorPrimaryDark" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -27,7 +28,8 @@
         android:layout_alignStart="@+id/editText3"
         android:layout_marginTop="20dp"
         android:hint="email"
-        android:textColorHint="#C5CAE9"/>
+        android:textColorHint="#C5CAE9"
+        android:textColor="@color/colorPrimaryDark" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -40,7 +42,8 @@
         android:layout_alignStart="@+id/editText4"
         android:layout_marginTop="20dp"
         android:hint="contraseña"
-        android:textColorHint="#C5CAE9"/>
+        android:textColorHint="#C5CAE9"
+        android:textColor="@color/colorPrimaryDark" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -53,7 +56,8 @@
         android:layout_alignStart="@+id/editText5"
         android:layout_marginTop="20dp"
         android:hint="repetir contraseña"
-        android:textColorHint="#C5CAE9"/>
+        android:textColorHint="#C5CAE9"
+        android:textColor="@color/colorPrimaryDark" />
 
     <Button
         android:layout_width="wrap_content"

@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="49dp"
-        android:textColor="#C5CaE9" />
+        android:textColor="@color/colorPrimaryDark" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         android:layout_below="@+id/editText"
         android:layout_alignLeft="@+id/editText"
         android:layout_alignStart="@+id/editText"
-        android:textColor="#C5CAE9" />
+        android:textColor="@color/colorPrimaryDark" />
 
     <Button
         android:layout_width="wrap_content"
