@@ -3,11 +3,17 @@
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/jugar"
-            android:title="Jugar" />
+            android:title="Jugar"
+            android:icon="@drawable/jugar"/>
         <item android:id="@+id/amigos"
-            android:title="Amigos" />
+            android:title="Amigos"
+            android:icon="@drawable/amigos"/>
+        <item android:id="@+id/configuracion"
+            android:title="Configuración"
+            android:icon="@drawable/configuracion"/>
         <item android:id="@+id/logout"
-            android:title="Cerrar Sesión" />
+            android:title="Cerrar Sesión"
+            android:icon="@drawable/logout"/>
 
     </group>
 
