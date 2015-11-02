@@ -58,7 +58,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     boolean enroqueBlanco = true;
     boolean enroqueNegro = true;
 
-    boolean jugadaLocal = true;// sirve para difenciar entre una jugada local y una remota
+    boolean jugadaLocal;// sirve para difenciar entre una jugada local y una remota
     Chess chess;
 
     @Override
@@ -318,7 +318,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         casillas[7][7] = (ImageView) findViewById(R.id.h1);
         colocarPiezas(1);
         inicializarCampos(1);
-
+        jugadaLocal = true;
     }
     private void inicializarCasillasNegro() {
 
@@ -396,6 +396,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         casillas[7][7] = (ImageView) findViewById(R.id.a8);
         colocarPiezas(1);
         inicializarCampos(2);
+        jugadaLocal = false;
     }
 
 
