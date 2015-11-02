@@ -39,6 +39,7 @@
         android:layout_below="@+id/editText2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="#C5CAE9"
-        android:textColor="#ffffff" />
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
 </RelativeLayout>

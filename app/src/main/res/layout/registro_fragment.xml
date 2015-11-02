@@ -62,9 +62,11 @@
         android:id="@+id/button2"
         android:layout_below="@+id/editText6"
         android:layout_marginTop="20dp"
-        android:background="#C5CAE9"
+        android:background="@color/colorPrimary"
         android:layout_alignRight="@+id/editText6"
         android:layout_alignEnd="@+id/editText6"
         android:layout_alignLeft="@+id/editText6"
-        android:layout_alignStart="@+id/editText6" />
+        android:layout_alignStart="@+id/editText6"
+        android:textStyle="bold"
+        android:textColor="#ffffff" />
 </RelativeLayout>
