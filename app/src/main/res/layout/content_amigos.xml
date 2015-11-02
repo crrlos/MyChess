@@ -16,5 +16,6 @@
         android:text="No tienes amigos,\nhas click en el botón + \nde la barra de arriba para agregar uno"
         android:id="@+id/textView17"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp" />
 </RelativeLayout>
