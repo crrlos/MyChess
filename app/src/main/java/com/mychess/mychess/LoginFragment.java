@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class LoginFragment extends Fragment{
     EditText usuario;
     EditText clave;
     ProgressDialog progressDialog;
+    Login login;
 
 
     @Override
@@ -51,6 +53,7 @@ public class LoginFragment extends Fragment{
             @Override
             public void onCancel(DialogInterface dialog) {
                 Toast.makeText(getContext(), "cancelado", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -70,7 +73,7 @@ public class LoginFragment extends Fragment{
                     String[] datos = new String[2];
                     datos[0] = usuario.getText().toString();
                     datos[1] = clave.getText().toString();
-                    Login login = new Login();
+                    login = new Login();
                     login.execute(datos);
 
                 }
@@ -104,6 +107,7 @@ public class LoginFragment extends Fragment{
                 publishProgress(respuesta.toString());
 
             }catch(Exception ex){
+                publishProgress(ex.getMessage());
 
             }
 
@@ -121,6 +125,8 @@ public class LoginFragment extends Fragment{
                 Intent intent = new Intent(getContext(),Juego.class);
                 startActivity(intent);
                 getActivity().finish();
+            }else{
+                Toast.makeText(getContext(), values[0], Toast.LENGTH_SHORT).show();
             }
 
 
