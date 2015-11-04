@@ -1,5 +1,9 @@
 package com.mychess.mychess;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,13 +20,24 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment{
     EditText usuario;
     EditText clave;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        if(!(preferences.getString("usuario",null) == null)){
+            Intent intent = new Intent(getContext(),Juego.class);
+            startActivity(intent);
+            getActivity().finish();
+
+        }
+
         View view = inflater.inflate(R.layout.login_fragment, container, false);
+
+
         usuario = (EditText) view.findViewById(R.id.loginUsuario);
         clave = (EditText) view.findViewById(R.id.loginClave);
         Button entrar = (Button) view.findViewById(R.id.button);
@@ -80,7 +95,13 @@ public class LoginFragment extends Fragment {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            Toast.makeText(getContext(), values[0], Toast.LENGTH_SHORT).show();
+            if(values[0].equals("0")){
+                SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("usuario",usuario.getText().toString());
+                editor.commit();
+            }
+
 
         }
 
