@@ -2,6 +2,7 @@ package com.mychess.mychess;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -76,7 +78,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         /*-------------------------*/
         nombreUsuario = (TextView) findViewById(R.id.nombreUsuario);
         SharedPreferences preferences = getSharedPreferences("usuario",MODE_PRIVATE);
-        nombreUsuario.setText(preferences.getString("usuario",null));
+        nombreUsuario.setText(preferences.getString("usuario", null));
         /*--------------------------*/
         tiempo = (TextView) findViewById(R.id.textView18);
         tiempoMovimiento = new Tiempo();
@@ -181,13 +183,34 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             startActivity(intent);
 
         } else if (id == R.id.logout) {
-            SharedPreferences preferences =getSharedPreferences("usuario",MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.clear();
-            editor.commit();
-            Intent intent= new Intent(this,Acceso.class);
-            startActivity(intent);
-            finish();
+            DialogInterface.OnClickListener listenerOk = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreferences preferences = getApplicationContext().getSharedPreferences("usuario",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear();
+                    editor.commit();
+
+                    Intent intent= new Intent(Juego.this,Acceso.class);
+                    startActivity(intent);
+                    finish();
+                }
+            };
+            DialogInterface.OnClickListener listenerCanclar = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Mensaje");
+            builder.setMessage("¿Está seguro que desea salir?");
+            builder.setPositiveButton("Cerrar Sesión", listenerOk);
+            builder.setNegativeButton("Cancelar",listenerCanclar);
+            builder.create();
+            builder.show();
+
+
 
 
         }
@@ -813,5 +836,6 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         }
     }
+
 
 }
