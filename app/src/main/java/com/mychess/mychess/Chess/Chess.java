@@ -146,6 +146,11 @@ public class Chess {
         return allMoves;
     }
 
+    public ArrayList<Ubicacion> mostrarMovimientos(int fila,int columna){
+        Ubicacion piece = new Ubicacion(fila,columna);
+        return getMovimientos(piece);
+    }
+
     public void checkGameOver() {
 
 
@@ -220,6 +225,7 @@ public class Chess {
 
         }
     }
+
 
     public int mover(String origen, String destino) {
         int estado = 0;
