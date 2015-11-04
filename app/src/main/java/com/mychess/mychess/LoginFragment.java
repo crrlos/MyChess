@@ -33,27 +33,35 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getContext(), "usuario vacío", Toast.LENGTH_SHORT).show();
                 } else if (clave.getText().length() == 0) {
                     Toast.makeText(getContext(), "clave vacía", Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    String[] datos = new String[2];
+                    datos[0] = usuario.getText().toString();
+                    datos[1] = clave.getText().toString();
+                    Login login = new Login();
+                    login.execute(datos);
+
                 }
-                Login login = new Login();
-                login.execute();
+
             }
         });
 
 
         return view;
     }
-    class Login extends AsyncTask<Void,String,Void>{
-
+    class Login extends AsyncTask<String,String,Void>{
+        String usuario;
+        String clave;
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(String... params) {
             final String NAMESPACE = "http://servicios/";
             final String URL = "http://servermychess.tk:8080/RegistroLogin/RegistroLogin";
             final String METHOD_NAME = "login";
             final String SOAP_ACTION = "http://Servicios/login";
 
             SoapObject request = new SoapObject(NAMESPACE,METHOD_NAME);
-            request.addProperty("usuario","crrlos");
-            request.addProperty("clave","a");
+            request.addProperty("usuario",params[0]);
+            request.addProperty("clave",params[1]);
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = false;
             envelope.setOutputSoapObject(request);
@@ -73,7 +81,10 @@ public class LoginFragment extends Fragment {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
+            Toast.makeText(getContext(), values[0], Toast.LENGTH_SHORT).show();
 
         }
+
+
     }
 }
