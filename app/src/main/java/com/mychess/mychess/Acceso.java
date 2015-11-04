@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class Acceso extends AppCompatActivity {
-    Button entrar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +65,7 @@ public class Acceso extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                entrar = (Button) findViewById(R.id.button);
-                entrar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Acceso.this,Juego.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
+
             }
 
             @Override
