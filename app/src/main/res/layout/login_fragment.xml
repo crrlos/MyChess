@@ -11,7 +11,7 @@
         android:hint="usuario"
         android:textColorHint="#C5CAE9"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/loginUsuario"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="49dp"
@@ -24,11 +24,11 @@
         android:hint="contraseña"
         android:textColorHint="#C5CAE9"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/loginClave"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/editText"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText"
+        android:layout_below="@+id/loginUsuario"
+        android:layout_alignLeft="@+id/loginUsuario"
+        android:layout_alignStart="@+id/loginUsuario"
         android:textColor="@color/colorPrimaryDark" />
 
     <Button
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:text="Entrar"
         android:id="@+id/button"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/loginClave"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimary"
