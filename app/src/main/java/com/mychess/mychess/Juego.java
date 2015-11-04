@@ -62,6 +62,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
     boolean jugadaLocal;// sirve para difenciar entre una jugada local y una remota
     Chess chess;
+    TextView nombreUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,11 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         inicializarCasillasBlanco();
         setOnclickListener();
         setDefaultColor();
-
+        /*-------------------------*/
+        nombreUsuario = (TextView) findViewById(R.id.nombreUsuario);
+        SharedPreferences preferences = getSharedPreferences("usuario",MODE_PRIVATE);
+        nombreUsuario.setText(preferences.getString("usuario",null));
+        /*--------------------------*/
         tiempo = (TextView) findViewById(R.id.textView18);
         tiempoMovimiento = new Tiempo();
         tiempoMovimiento.iniciar();
