@@ -1,7 +1,10 @@
 package com.mychess.mychess;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
@@ -23,11 +27,13 @@ import org.ksoap2.transport.HttpTransportSE;
 public class LoginFragment extends Fragment{
     EditText usuario;
     EditText clave;
+    ProgressDialog progressDialog;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        SharedPreferences preferences = getActivity().getSharedPreferences("usuario",Context.MODE_PRIVATE);
+        SharedPreferences preferences = getActivity().getSharedPreferences("usuario", Context.MODE_PRIVATE);
         if(!(preferences.getString("usuario",null) == null)){
             Intent intent = new Intent(getContext(),Juego.class);
             startActivity(intent);
@@ -36,6 +42,17 @@ public class LoginFragment extends Fragment{
         }
 
         View view = inflater.inflate(R.layout.login_fragment, container, false);
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Por favor espere...");
+        progressDialog.setTitle("Iniciando Sesión");
+        progressDialog.setCancelable(true);
+        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(getContext(), "cancelado", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         usuario = (EditText) view.findViewById(R.id.loginUsuario);
@@ -64,6 +81,7 @@ public class LoginFragment extends Fragment{
 
         return view;
     }
+
     class Login extends AsyncTask<String,String,Void>{
 
         @Override
@@ -108,6 +126,10 @@ public class LoginFragment extends Fragment{
 
         }
 
-
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.show();
+        }
     }
 }
