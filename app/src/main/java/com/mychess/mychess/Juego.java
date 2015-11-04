@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mychess.mychess.Chess.Chess;
+import com.mychess.mychess.Chess.Ubicacion;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -67,7 +68,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         setContentView(R.layout.activity_juego);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        inicializarCasillasNegro();
+        inicializarCasillasBlanco();
         setOnclickListener();
         setDefaultColor();
 
@@ -642,20 +643,28 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
     @Override
     public void onClick(View v) {
-        if(jugadaLocal) {
+        if(true) {
             int position[] = getPosition(v.getId());
             if (position[0] != -1) {//si el valor es negativo indica que el click no se  realizo en una casilla
                 if (origen == null) {
                     origen = casillas[position[0]][position[1]];
                     cOrigen = position[0];
                     fOrigen = position[1];
+                    casillas[cOrigen][fOrigen].setBackgroundResource(R.color.origen);
+                   for(Ubicacion u:chess.mostrarMovimientos(fOrigen,cOrigen))
+                   {
+                       casillas[u.getCol()][u.getFila()].setBackgroundResource(R.drawable.seleccion);
+                   }
                 } else {
-
-                    origen = null;
                     cDestino = position[0];
                     fDestino = position[1];
-                    validarMovimiento(crearCoordenada());
-
+                    destino = casillas[cDestino][fDestino];
+                    if(!(destino == origen)) {
+                        validarMovimiento(crearCoordenada());
+                        setDefaultColor();
+                    }else
+                        setDefaultColor();
+                    origen = null;
                 }
             }
         }else{
