@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -175,6 +176,14 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             startActivity(intent);
 
         } else if (id == R.id.logout) {
+            SharedPreferences preferences =getSharedPreferences("usuario",MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent= new Intent(this,Acceso.class);
+            startActivity(intent);
+            finish();
+
 
         }
 
