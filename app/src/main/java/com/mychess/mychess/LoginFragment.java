@@ -27,7 +27,7 @@ public class LoginFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences preferences = getActivity().getSharedPreferences("usuario",Context.MODE_PRIVATE);
         if(!(preferences.getString("usuario",null) == null)){
             Intent intent = new Intent(getContext(),Juego.class);
             startActivity(intent);
@@ -96,10 +96,13 @@ public class LoginFragment extends Fragment{
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
             if(values[0].equals("0")){
-                SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences preferences = getActivity().getSharedPreferences("usuario",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("usuario",usuario.getText().toString());
+                editor.putString("usuario", usuario.getText().toString());
                 editor.commit();
+                Intent intent = new Intent(getContext(),Juego.class);
+                startActivity(intent);
+                getActivity().finish();
             }
 
 
