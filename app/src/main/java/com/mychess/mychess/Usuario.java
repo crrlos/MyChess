@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 /**
  * Created by Carlos on 05/11/2015.
  */
-public class Usuario {
+final public class Usuario {
     SharedPreferences preferences;
     Context context;
 
