@@ -118,7 +118,7 @@ public class LoginFragment extends Fragment{
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
             if(values[0].equals("0")){
-                new Usuario(getContext()).setUsuario(values[0]);
+                new Usuario(getContext()).setUsuario(usuario.getText().toString());
                 Intent intent = new Intent(getContext(),Juego.class);
                 startActivity(intent);
                 getActivity().finish();
