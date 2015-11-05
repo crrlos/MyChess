@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
  * Created by Carlos on 05/11/2015.
  */
 final public class Usuario {
-    SharedPreferences preferences;
+    static SharedPreferences preferences;
     Context context;
 
     Usuario(Context context) {
@@ -22,7 +22,7 @@ final public class Usuario {
         return false;
     }
 
-    public String getUsuario() {
+    public static String getUsuario() {
         return preferences.getString("usuario", null);
     }
 
