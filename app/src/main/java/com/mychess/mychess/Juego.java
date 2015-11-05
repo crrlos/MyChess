@@ -79,8 +79,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         juegoIniciado = false;
         /**-------------------------**/
         nombreUsuario = (TextView) findViewById(R.id.nombreUsuario);
-        SharedPreferences preferences = getSharedPreferences("usuario",MODE_PRIVATE);
-        nombreUsuario.setText(preferences.getString("usuario", null));
+        nombreUsuario.setText(new Usuario(getApplicationContext()).getUsuario());
         /*--------------------------*/
         /********** inicializacion del tiemo *******/
         tiempo = (TextView) findViewById(R.id.textView18);
@@ -194,10 +193,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             DialogInterface.OnClickListener listenerOk = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    SharedPreferences preferences = getApplicationContext().getSharedPreferences("usuario",MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.clear();
-                    editor.commit();
+                   new Usuario(getApplicationContext()).clear();
 
                     Intent intent= new Intent(Juego.this,Acceso.class);
                     startActivity(intent);
