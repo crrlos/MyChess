@@ -161,7 +161,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.juego, menu);
-        return true;
+        if(juegoIniciado)
+            return true;
+        return false;
     }
 
     @Override
