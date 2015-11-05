@@ -63,6 +63,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     boolean enroqueNegro = true;
 
     boolean jugadaLocal;// sirve para difenciar entre una jugada local y una remota
+    boolean juegoIniciado;
     Chess chess;
     TextView nombreUsuario;
 
@@ -75,14 +76,16 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         inicializarCasillasBlanco();
         setOnclickListener();
         setDefaultColor();
-        /*-------------------------*/
+        juegoIniciado = false;
+        /**-------------------------**/
         nombreUsuario = (TextView) findViewById(R.id.nombreUsuario);
         SharedPreferences preferences = getSharedPreferences("usuario",MODE_PRIVATE);
         nombreUsuario.setText(preferences.getString("usuario", null));
         /*--------------------------*/
+        /********** inicializacion del tiemo *******/
         tiempo = (TextView) findViewById(R.id.textView18);
         tiempoMovimiento = new Tiempo();
-        tiempoMovimiento.iniciar();
+
         /* inicializcion del nuevo juego*/
         chess = new Chess();
         chess.newGame();
@@ -97,6 +100,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!juegoIniciado)
+                    Toast.makeText(Juego.this, "No ha iniciado un juego todavía", Toast.LENGTH_SHORT).show();
+                else
                 if(jugadaLocal) {
                     SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(Juego.this);
                     Speech speech = new Speech();
