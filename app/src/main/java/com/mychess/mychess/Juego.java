@@ -25,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 
 public class Juego extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -91,6 +93,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         /*---------------------*/
 
         new SocketServidor().conectar();
+        new RecibirInvitacion().execute();
         RecibirMovimientos recibirMovimientos = new RecibirMovimientos();
         recibirMovimientos.execute();
 
@@ -99,16 +102,15 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!juegoIniciado)
+                if (!juegoIniciado)
                     Toast.makeText(Juego.this, "No ha iniciado un juego todavía", Toast.LENGTH_SHORT).show();
-                else
-                if(jugadaLocal) {
+                else if (jugadaLocal) {
                     SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(Juego.this);
                     Speech speech = new Speech();
                     speechRecognizer.setRecognitionListener(speech);
                     Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                     speechRecognizer.startListening(intent);
-                }else
+                } else
                     Toast.makeText(Juego.this, "No es su turno", Toast.LENGTH_SHORT).show();
             }
         });
@@ -160,7 +162,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.juego, menu);
-        if(juegoIniciado)
+        if (juegoIniciado)
             return true;
         return false;
     }
@@ -193,9 +195,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             DialogInterface.OnClickListener listenerOk = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                   new Usuario(getApplicationContext()).clear();
+                    new Usuario(getApplicationContext()).clear();
 
-                    Intent intent= new Intent(Juego.this,Acceso.class);
+                    Intent intent = new Intent(Juego.this, Acceso.class);
                     startActivity(intent);
                     finish();
                 }
@@ -210,11 +212,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             builder.setTitle("Mensaje");
             builder.setMessage("¿Está seguro que desea salir?");
             builder.setPositiveButton("Cerrar Sesión", listenerOk);
-            builder.setNegativeButton("Cancelar",listenerCanclar);
+            builder.setNegativeButton("Cancelar", listenerCanclar);
             builder.create();
             builder.show();
-
-
 
 
         }
@@ -223,7 +223,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private void inicializarCampos(int n){
+
+    private void inicializarCampos(int n) {
         nombreColumnas[0] = (TextView) findViewById(R.id.columnaa);
         nombreColumnas[1] = (TextView) findViewById(R.id.columnab);
         nombreColumnas[2] = (TextView) findViewById(R.id.columnac);
@@ -234,13 +235,13 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         nombreColumnas[7] = (TextView) findViewById(R.id.columnah);
 
         numeroFila[0] = (TextView) findViewById(R.id.fila1);
-        numeroFila[1]= (TextView) findViewById(R.id.fila2);
-        numeroFila[2]= (TextView) findViewById(R.id.fila3);
-        numeroFila[3]= (TextView) findViewById(R.id.fila4);
-        numeroFila[4]= (TextView) findViewById(R.id.fila5);
-        numeroFila[5]= (TextView) findViewById(R.id.fila6);
-        numeroFila[6]= (TextView) findViewById(R.id.fila7);
-        numeroFila[7]= (TextView) findViewById(R.id.fila8);
+        numeroFila[1] = (TextView) findViewById(R.id.fila2);
+        numeroFila[2] = (TextView) findViewById(R.id.fila3);
+        numeroFila[3] = (TextView) findViewById(R.id.fila4);
+        numeroFila[4] = (TextView) findViewById(R.id.fila5);
+        numeroFila[5] = (TextView) findViewById(R.id.fila6);
+        numeroFila[6] = (TextView) findViewById(R.id.fila7);
+        numeroFila[7] = (TextView) findViewById(R.id.fila8);
 
         nombreColumnas[0].setText("a");
         nombreColumnas[1].setText("b");
@@ -260,8 +261,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         numeroFila[6].setText("7");
         numeroFila[7].setText("8");
 
-        if(n == 2)
-        {
+        if (n == 2) {
             nombreColumnas[0].setText("h");
             nombreColumnas[1].setText("g");
             nombreColumnas[2].setText("f");
@@ -362,6 +362,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         inicializarCampos(1);
         jugadaLocal = true;
     }
+
     private void inicializarCasillasNegro() {
 
         casillas[0][0] = (ImageView) findViewById(R.id.h1);
@@ -456,29 +457,29 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         }
     }
 
-    private void colocarPiezas(int bando){
+    private void colocarPiezas(int bando) {
 
 
-        casillas[0][7].setImageResource(bando == 1?R.mipmap.alpha_wr:R.mipmap.alpha_br);
-        casillas[7][7].setImageResource(bando == 1?R.mipmap.alpha_wr:R.mipmap.alpha_br);
+        casillas[0][7].setImageResource(bando == 1 ? R.mipmap.alpha_wr : R.mipmap.alpha_br);
+        casillas[7][7].setImageResource(bando == 1 ? R.mipmap.alpha_wr : R.mipmap.alpha_br);
 
         casillas[0][6].setImageResource(bando == 1 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
         casillas[1][6].setImageResource(bando == 1 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
-        casillas[2][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[3][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[4][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[5][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[6][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
-        casillas[7][6].setImageResource(bando == 1?R.mipmap.alpha_wp:R.mipmap.alpha_bp);
+        casillas[2][6].setImageResource(bando == 1 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[3][6].setImageResource(bando == 1 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[4][6].setImageResource(bando == 1 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[5][6].setImageResource(bando == 1 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[6][6].setImageResource(bando == 1 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
+        casillas[7][6].setImageResource(bando == 1 ? R.mipmap.alpha_wp : R.mipmap.alpha_bp);
 
-        casillas[1][7].setImageResource(bando == 1?R.mipmap.alpha_wn:R.mipmap.alpha_bn);
-        casillas[6][7].setImageResource(bando == 1?R.mipmap.alpha_wn:R.mipmap.alpha_bn);
+        casillas[1][7].setImageResource(bando == 1 ? R.mipmap.alpha_wn : R.mipmap.alpha_bn);
+        casillas[6][7].setImageResource(bando == 1 ? R.mipmap.alpha_wn : R.mipmap.alpha_bn);
 
-        casillas[2][7].setImageResource(bando == 1?R.mipmap.alpha_wb:R.mipmap.alpha_bb);
-        casillas[5][7].setImageResource(bando == 1?R.mipmap.alpha_wb:R.mipmap.alpha_bb);
+        casillas[2][7].setImageResource(bando == 1 ? R.mipmap.alpha_wb : R.mipmap.alpha_bb);
+        casillas[5][7].setImageResource(bando == 1 ? R.mipmap.alpha_wb : R.mipmap.alpha_bb);
 
-        casillas[3][7].setImageResource(bando == 1?R.mipmap.alpha_wq:R.mipmap.alpha_bq);
-        casillas[4][7].setImageResource(bando == 1?R.mipmap.alpha_wk:R.mipmap.alpha_bk);
+        casillas[3][7].setImageResource(bando == 1 ? R.mipmap.alpha_wq : R.mipmap.alpha_bq);
+        casillas[4][7].setImageResource(bando == 1 ? R.mipmap.alpha_wk : R.mipmap.alpha_bk);
 
 
         casillas[7][0].setImageResource(bando == 2 ? R.mipmap.alpha_wr : R.mipmap.alpha_br);
@@ -501,7 +502,6 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         casillas[3][0].setImageResource(bando == 2 ? R.mipmap.alpha_wq : R.mipmap.alpha_bq);
         casillas[4][0].setImageResource(bando == 2 ? R.mipmap.alpha_wk : R.mipmap.alpha_bk);
-
 
 
     }
@@ -537,15 +537,15 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         final String columnas = "abcdefgh";
         final String filas = "87654321";
 
-            cOrigen = columnas.indexOf(coordenadas.charAt(0));
-            cDestino = columnas.indexOf(coordenadas.charAt(2));
-            fOrigen = filas.indexOf(coordenadas.charAt(1));
-            fDestino = filas.indexOf(coordenadas.charAt(3));
+        cOrigen = columnas.indexOf(coordenadas.charAt(0));
+        cDestino = columnas.indexOf(coordenadas.charAt(2));
+        fOrigen = filas.indexOf(coordenadas.charAt(1));
+        fDestino = filas.indexOf(coordenadas.charAt(3));
 
-            if(cOrigen == -1 || cDestino == -1 || fOrigen == -1 || fDestino == -1)
-                return false;
+        if (cOrigen == -1 || cDestino == -1 || fOrigen == -1 || fDestino == -1)
+            return false;
 
-            return true;
+        return true;
 
 
     }
@@ -558,7 +558,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
                 if (validarCoordenadas(coordenadas)) {
 
                     validarMovimiento(coordenadas);
-                     break;
+                    break;
 
                 }
 
@@ -580,84 +580,79 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
 
     }
-    private void validarMovimiento(String coordenadas){
-        switch (chess.mover(coordenadas.substring(0,2),coordenadas.substring(2,4)))
-        {
+
+    private void validarMovimiento(String coordenadas) {
+        switch (chess.mover(coordenadas.substring(0, 2), coordenadas.substring(2, 4))) {
 
             case 2:
                 Toast.makeText(Juego.this, "movimiento no valido", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
-                moverPieza(1,coordenadas);
+                moverPieza(1, coordenadas);
                 break;
             case 4:
                 Toast.makeText(Juego.this, "movimiento no valido", Toast.LENGTH_SHORT).show();
                 break;
             case 0:
-                moverPieza(2,coordenadas);
+                moverPieza(2, coordenadas);
                 break;
 
         }
     }
 
-    private void moverPieza(int n,String coordenada){
-        if(jugadaLocal){
+    private void moverPieza(int n, String coordenada) {
+        if (jugadaLocal) {
             enviarMovimiento(crearCoordenada());
-                if(!enroque()) {
-                    casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
-                    casillas[cOrigen][fOrigen].setImageDrawable(null);
-                }
+            if (!enroque()) {
+                casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+                casillas[cOrigen][fOrigen].setImageDrawable(null);
+            }
 
-        }else{
+        } else {
             validarCoordenadas(coordenada);
-                if(!enroque()) {
-                    casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
-                    casillas[cOrigen][fOrigen].setImageDrawable(null);
-                }
+            if (!enroque()) {
+                casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+                casillas[cOrigen][fOrigen].setImageDrawable(null);
+            }
 
         }
 
         jugadaLocal = !jugadaLocal;
 
 
-        
-        if(n == 1){
+        if (n == 1) {
             Toast.makeText(Juego.this, "Jaque Mate", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private boolean enroque(){
+    private boolean enroque() {
 
-        if(enroqueBlanco)
-        if(cOrigen == 4 && fOrigen == 7 && cDestino == 6  && fDestino == 7)
-        {
-            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
-            casillas[cOrigen][fOrigen].setImageDrawable(null);
-            casillas[5][7].setImageDrawable(casillas[7][7].getDrawable());
-            casillas[7][7].setImageDrawable(null);
-            enroqueBlanco = !enroqueBlanco;
-            return true;
-        }else if(cOrigen == 4 && fOrigen == 7 && cDestino == 2 && fDestino == 7)
-        {
-            casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
-            casillas[cOrigen][fOrigen].setImageDrawable(null);
-            casillas[3][7].setImageDrawable(casillas[0][7].getDrawable());
-            casillas[0][7].setImageDrawable(null);
-            enroqueBlanco = !enroqueBlanco;
-            return true;
+        if (enroqueBlanco)
+            if (cOrigen == 4 && fOrigen == 7 && cDestino == 6 && fDestino == 7) {
+                casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+                casillas[cOrigen][fOrigen].setImageDrawable(null);
+                casillas[5][7].setImageDrawable(casillas[7][7].getDrawable());
+                casillas[7][7].setImageDrawable(null);
+                enroqueBlanco = !enroqueBlanco;
+                return true;
+            } else if (cOrigen == 4 && fOrigen == 7 && cDestino == 2 && fDestino == 7) {
+                casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
+                casillas[cOrigen][fOrigen].setImageDrawable(null);
+                casillas[3][7].setImageDrawable(casillas[0][7].getDrawable());
+                casillas[0][7].setImageDrawable(null);
+                enroqueBlanco = !enroqueBlanco;
+                return true;
 
-        }
-        if(enroqueNegro)
-            if(cOrigen == 4 && fOrigen == 0 && cDestino == 6  && fDestino == 0)
-            {
+            }
+        if (enroqueNegro)
+            if (cOrigen == 4 && fOrigen == 0 && cDestino == 6 && fDestino == 0) {
                 casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
                 casillas[cOrigen][fOrigen].setImageDrawable(null);
                 casillas[5][0].setImageDrawable(casillas[7][0].getDrawable());
                 casillas[7][0].setImageDrawable(null);
                 enroqueNegro = !enroqueNegro;
                 return true;
-            }else if(cOrigen == 4 && fOrigen == 0 && cDestino == 2 && fDestino == 0)
-            {
+            } else if (cOrigen == 4 && fOrigen == 0 && cDestino == 2 && fDestino == 0) {
                 casillas[cDestino][fDestino].setImageDrawable(casillas[cOrigen][fOrigen].getDrawable());
                 casillas[cOrigen][fOrigen].setImageDrawable(null);
                 casillas[3][0].setImageDrawable(casillas[0][0].getDrawable());
@@ -684,10 +679,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
     @Override
     public void onClick(View v) {
-        if(!juegoIniciado)
+        if (!juegoIniciado)
             Toast.makeText(Juego.this, "No ha iniciado un juego todavía", Toast.LENGTH_SHORT).show();
-        else
-        if(true) {
+        else if (true) {
             int position[] = getPosition(v.getId());
             if (position[0] != -1) {//si el valor es negativo indica que el click no se  realizo en una casilla
                 if (origen == null) {
@@ -695,23 +689,22 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
                     cOrigen = position[0];
                     fOrigen = position[1];
                     casillas[cOrigen][fOrigen].setBackgroundResource(R.color.origen);
-                   for(Ubicacion u:chess.mostrarMovimientos(fOrigen,cOrigen))
-                   {
-                       casillas[u.getCol()][u.getFila()].setBackgroundResource(R.drawable.seleccion);
-                   }
+                    for (Ubicacion u : chess.mostrarMovimientos(fOrigen, cOrigen)) {
+                        casillas[u.getCol()][u.getFila()].setBackgroundResource(R.drawable.seleccion);
+                    }
                 } else {
                     cDestino = position[0];
                     fDestino = position[1];
                     destino = casillas[cDestino][fDestino];
-                    if(!(destino == origen)) {
+                    if (!(destino == origen)) {
                         validarMovimiento(crearCoordenada());
                         setDefaultColor();
-                    }else
+                    } else
                         setDefaultColor();
                     origen = null;
                 }
             }
-        }else{
+        } else {
             Toast.makeText(Juego.this, "No es su turno", Toast.LENGTH_SHORT).show();
         }
 
@@ -844,5 +837,59 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         }
     }
 
+    class RecibirInvitacion extends AsyncTask<Void, String, Void> {
+        DataInputStream in;
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            boolean continuar = true;
+            while (continuar) {
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    in = new DataInputStream(SocketServidor.getSocket().getInputStream());
+                    publishProgress(in.readUTF());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            DialogInterface.OnClickListener listenerOk = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            };
+            DialogInterface.OnClickListener listenerCanclar = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(Juego.this);
+            /*builder.setTitle("Alerta");
+            builder.setMessage(values[0]+" Te invita a jugar");*/
+            View v = getLayoutInflater().inflate(R.layout.invitacion,null);
+            TextView retador = (TextView) v.findViewById(R.id.retador);
+            retador.setText(values[0]);
+            builder.setView(v);
+            builder.setPositiveButton("Aceptar", listenerOk);
+            builder.setNegativeButton("Rechazar", listenerCanclar);
+            builder.create();
+            builder.show();
+
+        }
+
+    }
 
 }
