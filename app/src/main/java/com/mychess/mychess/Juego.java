@@ -550,7 +550,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
     }
 
-    private void procesarResultados(ArrayList<String> listaCoordenadas) {
+    public void procesarResultados(ArrayList<String> listaCoordenadas) {
         String coordenadas;
         for (int i = 0; i < listaCoordenadas.size(); ++i) {
             coordenadas = listaCoordenadas.get(i).replace(" ", "").toLowerCase();
