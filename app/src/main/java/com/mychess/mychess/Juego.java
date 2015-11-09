@@ -106,7 +106,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
                     Toast.makeText(Juego.this, "No ha iniciado un juego todavía", Toast.LENGTH_SHORT).show();
                 else if (jugadaLocal) {
                     SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(Juego.this);
-                    Speech speech = new Speech();
+                    Speech speech = new Speech(Juego.this);
                     speechRecognizer.setRecognitionListener(speech);
                     Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                     speechRecognizer.startListening(intent);
@@ -712,56 +712,6 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     }
 
 
-    class Speech implements RecognitionListener {
-
-        @Override
-        public void onReadyForSpeech(Bundle params) {
-
-        }
-
-        @Override
-        public void onBeginningOfSpeech() {
-
-        }
-
-        @Override
-        public void onRmsChanged(float rmsdB) {
-
-        }
-
-        @Override
-        public void onBufferReceived(byte[] buffer) {
-
-        }
-
-        @Override
-        public void onEndOfSpeech() {
-
-        }
-
-        @Override
-        public void onError(int error) {
-
-        }
-
-        @Override
-        public void onResults(Bundle results) {
-            ArrayList<String> listaPalabras = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            procesarResultados(listaPalabras);
-
-
-        }
-
-        @Override
-        public void onPartialResults(Bundle partialResults) {
-
-        }
-
-        @Override
-        public void onEvent(int eventType, Bundle params) {
-
-        }
-    }
 
     class Tiempo {
         CountDown countDown;
