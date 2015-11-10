@@ -76,10 +76,10 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Tablero tab = new Tablero(casillas,nombreColumnas,numeroFila,this);
-        tab.inicializarCasillasNegro();
+        jugadaLocal =  tab.inicializarCasillasBlanco();
         setOnclickListener();
         setDefaultColor();
-        juegoIniciado = false;
+        juegoIniciado = true;
         /**-------------------------**/
         nombreUsuario = (TextView) findViewById(R.id.nombreUsuario);
         nombreUsuario.setText(new Usuario(getApplicationContext()).getUsuario());
@@ -95,8 +95,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         new SocketServidor().conectar();
         new RecibirInvitacion().execute();
-        RecibirMovimientos recibirMovimientos = new RecibirMovimientos();
-        recibirMovimientos.execute();
+
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -304,11 +304,15 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     private void enviarMovimiento(String coordendas) {
         DataOutputStream out = null;
         try {
+
+            out = new DataOutputStream(SocketServidor.getSocket().getOutputStream());
+            out.writeInt(3);
             out = new DataOutputStream(SocketServidor.getSocket().getOutputStream());
             out.writeUTF(coordendas);
-            tiempoMovimiento.reiniciar();
+            
+            //tiempoMovimiento.reiniciar();
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(Juego.this, "no hay conexion", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -492,16 +496,16 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     }
 
     class RecibirMovimientos extends AsyncTask<Void, String, Boolean> {
-        Socket socket;
+
 
         protected Boolean doInBackground(Void... params) {
-            socket = SocketServidor.getSocket();
+
             boolean continuar = true;
             while (continuar) {
                 try {
                     Thread.sleep(250);
-                    InputStream fromServer = SocketServidor.getSocket().getInputStream();
-                    DataInputStream in = new DataInputStream(fromServer);
+
+                    DataInputStream in = new DataInputStream(SocketServidor.getSocket().getInputStream());
                     publishProgress(in.readUTF());
                 } catch (Exception ex) {
                 }
@@ -515,19 +519,25 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             super.onProgressUpdate(values);
             validarMovimiento(values[0]);
             Toast.makeText(Juego.this, values[0], Toast.LENGTH_SHORT).show();
-            tiempoMovimiento.iniciar();
+           // tiempoMovimiento.iniciar();
 
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(Juego.this, "recibir iniciado", Toast.LENGTH_SHORT).show();
         }
     }
 
     class RecibirInvitacion extends AsyncTask<Void, String, Void> {
         DataInputStream in;
-
+        boolean continuar = true;
 
         @Override
         protected Void doInBackground(Void... params) {
 
-            boolean continuar = true;
+
             while (continuar) {
                 try {
                     Thread.sleep(250);
@@ -536,6 +546,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
                 }
                 try {
                     in = new DataInputStream(SocketServidor.getSocket().getInputStream());
+                    continuar = false;
                     publishProgress(in.readUTF());
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -547,6 +558,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
+            new RecibirMovimientos().execute();
             DialogInterface.OnClickListener listenerOk = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -570,6 +582,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             builder.setNegativeButton("Rechazar", listenerCanclar);
             builder.create();
             builder.show();
+
+
 
         }
 
