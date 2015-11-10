@@ -546,8 +546,8 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
                 }
                 try {
                     in = new DataInputStream(SocketServidor.getSocket().getInputStream());
-                    continuar = false;
                     publishProgress(in.readUTF());
+                    continuar = false;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -558,16 +558,17 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            new RecibirMovimientos().execute();
+
             DialogInterface.OnClickListener listenerOk = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    new RecibirMovimientos().execute();
                 }
             };
             DialogInterface.OnClickListener listenerCanclar = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                   new RecibirInvitacion().execute();
                     dialog.cancel();
                 }
             };
