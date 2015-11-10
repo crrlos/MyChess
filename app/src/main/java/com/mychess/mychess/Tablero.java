@@ -22,7 +22,7 @@ public class Tablero {
 
     }
 
-    private boolean inicializarCasillasBlanco() {
+   public  boolean inicializarCasillasBlanco() {
 
         casillas[0][0] = (ImageView) j.findViewById(R.id.a8);
         casillas[0][1] = (ImageView) j.findViewById(R.id.a7);
