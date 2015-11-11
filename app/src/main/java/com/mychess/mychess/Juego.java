@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.IBinder;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -70,6 +71,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     Chess chess;
     TextView nombreUsuario;
 
+    RecibirMovimientos movimientos;
+    Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,10 +81,11 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Tablero tab = new Tablero(casillas,nombreColumnas,numeroFila,this);
-        jugadaLocal =  tab.inicializarCasillasBlanco();
+        jugadaLocal =  tab.inicializarCasillasNegro();
         setOnclickListener();
         setDefaultColor();
         juegoIniciado = true;
+        handler  = new Handler();
         /**-------------------------**/
         nombreUsuario = (TextView) findViewById(R.id.nombreUsuario);
         nombreUsuario.setText(new Usuario(getApplicationContext()).getUsuario());
@@ -96,8 +101,10 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         new SocketServidor().conectar();
         MainThread thread = new MainThread();
+        thread.setName("MainThread");
         thread.start();
         RecibirInvitacion invitacion = new RecibirInvitacion();
+
         invitacion.execute();
 
 
@@ -501,39 +508,36 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
     }
 
-    class RecibirMovimientos extends AsyncTask<Void, String, Boolean> {
 
 
-        protected Boolean doInBackground(Void... params) {
+    class RecibirMovimientos extends Thread {
 
+        @Override
+        public void run() {
+            super.run();
             boolean continuar = true;
             while (continuar) {
                 try {
-                    Thread.sleep(250);
+                    Thread.sleep(1000);
 
-                    DataInputStream in = new DataInputStream(SocketServidor.getSocket().getInputStream());
-                    publishProgress(in.readUTF());
+                    if(ThreadsData.RECIBIR_MOVIMIENTO) {
+                        ThreadsData.RECIBIR_MOVIMIENTO = false;
+                        handler.post(run);
+
+                    }
                 } catch (Exception ex) {
+
                 }
 
             }
-            return null;
         }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-            validarMovimiento(values[0]);
-            Toast.makeText(Juego.this, values[0], Toast.LENGTH_SHORT).show();
-           // tiempoMovimiento.iniciar();
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Toast.makeText(Juego.this, "recibir iniciado", Toast.LENGTH_SHORT).show();
-        }
+    Runnable run = new Runnable() {
+          @Override
+          public void run() {
+              Toast.makeText(Juego.this, ThreadsData.MOVIMIENTO, Toast.LENGTH_SHORT).show();
+              validarMovimiento(ThreadsData.MOVIMIENTO);
+          }
+      };
     }
 
    class RecibirInvitacion extends AsyncTask<Void, String, Void> {
@@ -567,13 +571,14 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     enviarRespuesta(1,ThreadsData.INVITACION_USUARIO);
-                    new RecibirMovimientos().execute();
+                 movimientos = new RecibirMovimientos();
+                    movimientos.start();
                 }
             };
             DialogInterface.OnClickListener listenerCanclar = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    enviarRespuesta(0,ThreadsData.INVITACION_USUARIO);
+                    enviarRespuesta(0, ThreadsData.INVITACION_USUARIO);
 
                     dialog.cancel();
                 }
