@@ -574,7 +574,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     enviarRespuesta(0,ThreadsData.INVITACION_USUARIO);
-                   new RecibirInvitacion().execute();
+
                     dialog.cancel();
                 }
             };
