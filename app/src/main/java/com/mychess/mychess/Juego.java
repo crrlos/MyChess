@@ -82,6 +82,15 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         setSupportActionBar(toolbar);
         Tablero tab = new Tablero(casillas,nombreColumnas,numeroFila,this);
         jugadaLocal =  tab.inicializarCasillasNegro();
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null)
+        {
+            if(bundle.getBoolean("juegoIniciado")){
+               new RecibirMovimientos().start();
+            }
+        }else{
+            new SocketServidor().conectar();
+        }
         setOnclickListener();
         setDefaultColor();
         juegoIniciado = true;
@@ -99,7 +108,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         chess.newGame();
         /*---------------------*/
 
-        new SocketServidor().conectar();
+        
         MainThread thread = new MainThread();
         thread.setName("MainThread");
         thread.start();
