@@ -37,6 +37,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
@@ -94,7 +95,10 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         /*---------------------*/
 
         new SocketServidor().conectar();
-        new RecibirInvitacion().execute();
+        MainThread thread = new MainThread();
+        thread.start();
+        RecibirInvitacion invitacion = new RecibirInvitacion();
+        invitacion.execute();
 
 
 
@@ -189,7 +193,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         if (id == R.id.jugar) {
             // Handle the camera action
         } else if (id == R.id.amigos) {
+
             Intent intent = new Intent(Juego.this, Amigos.class);
+
             startActivity(intent);
 
         } else if (id == R.id.logout) {
@@ -309,7 +315,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             out.writeInt(3);
             out = new DataOutputStream(SocketServidor.getSocket().getOutputStream());
             out.writeUTF(coordendas);
-            
+
             //tiempoMovimiento.reiniciar();
         } catch (IOException e) {
             Toast.makeText(Juego.this, "no hay conexion", Toast.LENGTH_SHORT).show();
@@ -530,62 +536,59 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         }
     }
 
-    class RecibirInvitacion extends AsyncTask<Void, String, Void> {
-        DataInputStream in;
-        boolean continuar = true;
-
-        @Override
+   class RecibirInvitacion extends AsyncTask<Void, String, Void> {
+       boolean continuar = true;
+       @Override
         protected Void doInBackground(Void... params) {
-
-
-            while (continuar) {
-                try {
-                    Thread.sleep(250);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    in = new DataInputStream(SocketServidor.getSocket().getInputStream());
-                    publishProgress(in.readUTF());
-                    continuar = false;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        while(continuar)
+        {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            if(ThreadsData.RECIBIR_INVITACION) {
+                publishProgress(null);
+                ThreadsData.RECIBIR_INVITACION = false;
+            }
+
+        }
+
+
             return null;
         }
 
         @Override
-        protected void onProgressUpdate(final String... values) {
+        protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
 
 
             DialogInterface.OnClickListener listenerOk = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    enviarRespuesta(1,values[0]);
+                    enviarRespuesta(1,ThreadsData.INVITACION_USUARIO);
                     new RecibirMovimientos().execute();
                 }
             };
             DialogInterface.OnClickListener listenerCanclar = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    enviarRespuesta(0,values[0]);
+                    enviarRespuesta(0,ThreadsData.INVITACION_USUARIO);
                    new RecibirInvitacion().execute();
                     dialog.cancel();
                 }
             };
             AlertDialog.Builder builder = new AlertDialog.Builder(Juego.this);
-            /*builder.setTitle("Alerta");
-            builder.setMessage(values[0]+" Te invita a jugar");*/
+
             View v = getLayoutInflater().inflate(R.layout.invitacion,null);
             TextView retador = (TextView) v.findViewById(R.id.retador);
-            retador.setText(values[0]);
+            retador.setText(ThreadsData.INVITACION_USUARIO);
             builder.setView(v);
             builder.setPositiveButton("Aceptar", listenerOk);
             builder.setNegativeButton("Rechazar", listenerCanclar);
             builder.create();
             builder.show();
+
 
 
 
