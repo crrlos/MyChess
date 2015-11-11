@@ -16,7 +16,6 @@ public class MainThread extends Thread{
     DataInputStream in;
 
 
-
     @Override
     public void run() {
         super.run();
@@ -37,6 +36,20 @@ public class MainThread extends Thread{
                         ThreadsData.INVITACION_USUARIO = in.readUTF();
 
                     }
+                    break;
+                    case 2:{
+                        ThreadsData.ESPERAR_RESPUESTA  = true;
+                        in = new DataInputStream(SocketServidor.getSocket().getInputStream());
+                        ThreadsData.RESPUESTA = in.readInt();
+
+                    }
+                    break;
+                    case 3:{
+                        ThreadsData.RECIBIR_MOVIMIENTO = true;
+                        in = new DataInputStream(SocketServidor.getSocket().getInputStream());
+                        ThreadsData.MOVIMIENTO = in.readUTF();
+                    }
+                    break;
 
 
                 }
