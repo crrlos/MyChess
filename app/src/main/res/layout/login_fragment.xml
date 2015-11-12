@@ -7,7 +7,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:hint="usuario"
         android:textColorHint="#C5CAE9"
         android:ems="10"

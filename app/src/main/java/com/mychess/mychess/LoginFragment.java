@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment{
         progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                Toast.makeText(getContext(), "cancelado", Toast.LENGTH_SHORT).show();
+             login.cancel(true);
 
             }
         });
@@ -117,13 +117,14 @@ public class LoginFragment extends Fragment{
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            if(values[0].equals("0")){
+            if(values[0].equals("1")){
                 new Usuario(getContext()).setUsuario(usuario.getText().toString());
                 Intent intent = new Intent(getContext(),Juego.class);
                 startActivity(intent);
                 getActivity().finish();
             }else{
-                Toast.makeText(getContext(), values[0], Toast.LENGTH_SHORT).show();
+                progressDialog.cancel();
+                Toast.makeText(getContext(),"error!", Toast.LENGTH_SHORT).show();
             }
 
 
