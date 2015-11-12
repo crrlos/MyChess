@@ -81,7 +81,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Tablero tab = new Tablero(casillas,nombreColumnas,numeroFila,this);
-        jugadaLocal =  tab.inicializarCasillasNegro();
+        jugadaLocal =  tab.inicializarCasillasBlanco()  ;
         Bundle bundle = getIntent().getExtras();
         if(bundle != null)
         {
@@ -90,6 +90,9 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             }
         }else{
             new SocketServidor().conectar();
+            MainThread thread = new MainThread();
+            thread.setName("MainThread");
+            thread.start();
         }
         setOnclickListener();
         setDefaultColor();
@@ -109,9 +112,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         /*---------------------*/
 
         
-        MainThread thread = new MainThread();
-        thread.setName("MainThread");
-        thread.start();
+
         RecibirInvitacion invitacion = new RecibirInvitacion();
 
         invitacion.execute();
@@ -440,7 +441,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     public void onClick(View v) {
         if (!juegoIniciado)
             Toast.makeText(Juego.this, "No ha iniciado un juego todavía", Toast.LENGTH_SHORT).show();
-        else if (true) {
+        else if (jugadaLocal) {
             int position[] = getPosition(v.getId());
             if (position[0] != -1) {//si el valor es negativo indica que el click no se  realizo en una casilla
                 if (origen == null) {
@@ -527,7 +528,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             boolean continuar = true;
             while (continuar) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(250);
 
                     if(ThreadsData.RECIBIR_MOVIMIENTO) {
                         ThreadsData.RECIBIR_MOVIMIENTO = false;
