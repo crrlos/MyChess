@@ -81,7 +81,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Tablero tab = new Tablero(casillas,nombreColumnas,numeroFila,this);
-        jugadaLocal =  tab.inicializarCasillasBlanco()  ;
+        jugadaLocal =  tab.inicializarCasillasBlanco();
         Bundle bundle = getIntent().getExtras();
         if(bundle != null)
         {
@@ -115,7 +115,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         RecibirInvitacion invitacion = new RecibirInvitacion();
 
-        invitacion.execute();
+        invitacion.start();
 
 
 
@@ -550,64 +550,33 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
       };
     }
 
-   class RecibirInvitacion extends AsyncTask<Void, String, Void> {
+   class RecibirInvitacion extends Thread {
        boolean continuar = true;
+
        @Override
-        protected Void doInBackground(Void... params) {
-        while(continuar)
-        {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if(ThreadsData.RECIBIR_INVITACION) {
-                publishProgress(null);
-                ThreadsData.RECIBIR_INVITACION = false;
-            }
-
-        }
-
-
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-
-
-            DialogInterface.OnClickListener listenerOk = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    enviarRespuesta(1,ThreadsData.INVITACION_USUARIO);
-                 movimientos = new RecibirMovimientos();
-                    movimientos.start();
-                }
-            };
-            DialogInterface.OnClickListener listenerCanclar = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    enviarRespuesta(0, ThreadsData.INVITACION_USUARIO);
-
-                    dialog.cancel();
-                }
-            };
-            AlertDialog.Builder builder = new AlertDialog.Builder(Juego.this);
-
-            View v = getLayoutInflater().inflate(R.layout.invitacion,null);
-            TextView retador = (TextView) v.findViewById(R.id.retador);
-            retador.setText(ThreadsData.INVITACION_USUARIO);
-            builder.setView(v);
-            builder.setPositiveButton("Aceptar", listenerOk);
-            builder.setNegativeButton("Rechazar", listenerCanclar);
-            builder.create();
-            builder.show();
+       public void run() {
+           super.run();
+           while(continuar){
+               try {
+                   Thread.sleep(1000);
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+               if(ThreadsData.RECIBIR_INVITACION){
+                   ThreadsData.RECIBIR_INVITACION = false;
+                   handler.post(run);
+               }
+           }
+       }
+       Runnable run = new Runnable() {
+           @Override
+           public void run() {
+                mostrarDialogo();
+           }
+       };
 
 
 
-
-        }
         private void enviarRespuesta(int respuesta,String jugador){
             try {
                 DataOutputStream out = new DataOutputStream(SocketServidor.getSocket().getOutputStream());
@@ -622,6 +591,38 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
 
         }
 
+       private void mostrarDialogo(){
+           DialogInterface.OnClickListener listenerOk = new DialogInterface.OnClickListener() {
+               @Override
+               public void onClick(DialogInterface dialog, int which) {
+                   enviarRespuesta(1,ThreadsData.INVITACION_USUARIO);
+                   movimientos = new RecibirMovimientos();
+                   movimientos.start();
+               }
+           };
+           DialogInterface.OnClickListener listenerCanclar = new DialogInterface.OnClickListener() {
+               @Override
+               public void onClick(DialogInterface dialog, int which) {
+                   enviarRespuesta(0, ThreadsData.INVITACION_USUARIO);
+
+                   dialog.cancel();
+               }
+           };
+           AlertDialog.Builder builder = new AlertDialog.Builder(Juego.this);
+
+           View v = getLayoutInflater().inflate(R.layout.invitacion,null);
+           TextView retador = (TextView) v.findViewById(R.id.retador);
+           retador.setText(ThreadsData.INVITACION_USUARIO);
+           builder.setView(v);
+           builder.setPositiveButton("Aceptar", listenerOk);
+           builder.setNegativeButton("Rechazar", listenerCanclar);
+           builder.create();
+           builder.show();
+
+       }
+
     }
+
+
 
 }
