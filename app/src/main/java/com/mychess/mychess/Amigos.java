@@ -14,8 +14,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.DataInputStream;
@@ -27,6 +30,7 @@ public class Amigos extends AppCompatActivity {
     EditText amigo;
     ProgressDialog progressDialog;
     Handler handler;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,10 @@ public class Amigos extends AppCompatActivity {
 
         invitar = (Button) findViewById(R.id.btnInvitar);
         amigo = (EditText) findViewById(R.id.txtAmigo);
-
+        spinner = (Spinner) findViewById(R.id.spinner);
+        final String[] bandos = {"Blancas","Negras"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Amigos.this,android.R.layout.simple_list_item_1,bandos);
+        spinner.setAdapter(adapter);
 
         handler = new Handler();
 
