@@ -111,7 +111,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         chess.newGame();
         /*---------------------*/
 
-        
+
 
         RecibirInvitacion invitacion = new RecibirInvitacion();
 
@@ -325,12 +325,11 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
     }
 
     private void enviarMovimiento(String coordendas) {
-        DataOutputStream out = null;
+        DataOutputStream out;
         try {
 
             out = new DataOutputStream(SocketServidor.getSocket().getOutputStream());
             out.writeInt(3);
-            out = new DataOutputStream(SocketServidor.getSocket().getOutputStream());
             out.writeUTF(coordendas);
 
             //tiempoMovimiento.reiniciar();
