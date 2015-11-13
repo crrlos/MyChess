@@ -54,6 +54,8 @@ public class MainThread extends Thread{
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                continuar = false;
+                ThreadsData.THREAD = null;
             }
 
 
@@ -61,8 +63,11 @@ public class MainThread extends Thread{
     }
 
     public static void iniciar(){
-        MainThread thread = new MainThread();
-        thread.start();
+        if(ThreadsData.THREAD == null) {
+            MainThread thread = new MainThread();
+            thread.start();
+            ThreadsData.THREAD = thread;
+        }
     }
 
 

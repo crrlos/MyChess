@@ -19,6 +19,9 @@ public class ThreadsData {
     public static boolean RECIBIR_MOVIMIENTO = false;
     public static String  MOVIMIENTO = "";
 
+    /** Variable para mantener una sola instancia del MainThread**/
+    public static MainThread THREAD = null;
+
 
 
 
