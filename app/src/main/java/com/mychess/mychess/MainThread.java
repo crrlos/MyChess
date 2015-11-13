@@ -11,7 +11,6 @@ import java.io.IOException;
  * Created by Carlos on 10/11/2015.
  */
 public class MainThread extends Thread{
-    Context context;
     boolean continuar = true;
     DataInputStream in;
 
@@ -59,6 +58,11 @@ public class MainThread extends Thread{
 
 
         }
+    }
+
+    public static void iniciar(){
+        MainThread thread = new MainThread();
+        thread.start();
     }
 
 

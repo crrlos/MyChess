@@ -81,7 +81,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Tablero tab = new Tablero(casillas,nombreColumnas,numeroFila,this);
-        jugadaLocal =  tab.inicializarCasillasBlanco();
+        jugadaLocal =  tab.inicializarCasillasNegro();
         Bundle bundle = getIntent().getExtras();
         if(bundle != null)
         {
@@ -90,9 +90,7 @@ public class Juego extends AppCompatActivity implements NavigationView.OnNavigat
             }
         }else{
             new SocketServidor().conectar();
-            MainThread thread = new MainThread();
-            thread.setName("MainThread");
-            thread.start();
+            MainThread.iniciar();
         }
         setOnclickListener();
         setDefaultColor();
